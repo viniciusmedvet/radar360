@@ -1,0 +1,20 @@
+{
+  "name": "canal-noticias",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pipeline diário de pauta, roteiros e publicação agendada do canal de notícias",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "coletar": "node scripts/coletar-fontes.mjs",
+    "gerar": "node scripts/gerar-conteudo.mjs",
+    "publicar": "node scripts/publicar-youtube.mjs",
+    "publicar:simular": "node scripts/publicar-youtube.mjs --simular",
+    "token-youtube": "node scripts/obter-token-youtube.mjs",
+    "diario": "npm run coletar && npm run gerar"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.129.0",
+    "googleapis": "^182.0.0"
+  }
+}

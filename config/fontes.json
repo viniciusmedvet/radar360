@@ -1,0 +1,88 @@
+{
+  "_leia": "Canais de referência indicados pelo Vinícius. São FONTES DE PAUTA, não provas: todo fato citado em vídeo precisa ser confirmado em fonte primária ou veículo independente (ver linha-editorial.md). Campo 'handle' marcado com 'confirmar: true' ainda não foi validado; o coletor tenta localizar pelo campo 'busca' e registra o ID encontrado em saida/<data>/coleta.json para você conferir e fixar aqui em 'channelId'.",
+  "canais": [
+    {
+      "nome": "The Diary Of A CEO",
+      "handle": "@TheDiaryOfACEO",
+      "channelId": "",
+      "confirmar": false,
+      "eixo": "negocios",
+      "busca": "The Diary Of A CEO Steven Bartlett"
+    },
+    {
+      "nome": "Oiluiz TV",
+      "handle": "@oiluiz",
+      "channelId": "UCTnAz569lU_nwpSmY4daZvg",
+      "confirmar": false,
+      "eixo": "politica-brasil",
+      "busca": "Oiluiz TV"
+    },
+    {
+      "nome": "Revista Oeste",
+      "handle": "@RevistaOeste",
+      "channelId": "",
+      "confirmar": true,
+      "eixo": "politica-brasil",
+      "busca": "Revista Oeste"
+    },
+    {
+      "nome": "Chris Koerner — The Koerner Office",
+      "handle": "@thekoerneroffice",
+      "channelId": "",
+      "confirmar": true,
+      "eixo": "negocios",
+      "busca": "The Koerner Office Chris Koerner"
+    },
+    {
+      "nome": "Canal Digital",
+      "handle": "",
+      "channelId": "",
+      "confirmar": true,
+      "eixo": "politica-brasil",
+      "busca": "Canal Digital"
+    },
+    {
+      "nome": "Pavivi Sem Mimimi (Tiago Pavinatto)",
+      "handle": "@Pavinatto",
+      "channelId": "",
+      "confirmar": true,
+      "eixo": "judiciario",
+      "busca": "Pavivi sem mimimi Pavinatto"
+    },
+    {
+      "nome": "InfoMoney",
+      "handle": "@InfoMoney",
+      "channelId": "",
+      "confirmar": true,
+      "eixo": "negocios",
+      "busca": "InfoMoney"
+    }
+  ],
+  "grade_diaria": [
+    {
+      "slot": 1,
+      "horario_brt": "07:00",
+      "eixo": "geopolitica",
+      "tema": "Guerra na Ucrânia, Rússia/Putin, EUA/Trump, Europa — e o impacto direto no Brasil (fertilizantes, commodities, câmbio)"
+    },
+    {
+      "slot": 2,
+      "horario_brt": "12:00",
+      "eixo": "geopolitica",
+      "tema": "Oriente Médio: Irã x Estados Unidos, Israel, Estreito de Ormuz, petróleo — e o impacto no combustível e na inflação do brasileiro"
+    },
+    {
+      "slot": 3,
+      "horario_brt": "18:00",
+      "eixo": "judiciario",
+      "tema": "Bastidores do STF e dos Três Poderes: decisões, inquéritos e crises envolvendo ministros (Moraes, Gilmar Mendes, Toffoli, Mendonça, Fux), Congresso e Executivo; esquemas de corrupção no Brasil e no mundo"
+    },
+    {
+      "slot": 4,
+      "horario_brt": "21:00",
+      "eixo": "negocios",
+      "tema": "Dinheiro e poder: mercado (Ibovespa, dólar, Selic, Focus), política econômica e estratégias educativas de construção de patrimônio"
+    }
+  ],
+  "_grade_nota": "Horários iniciais de trabalho, não comprovados por dados do canal. Reavaliar após 14 dias com YouTube Studio > Análise > 'Quando seus espectadores estão no YouTube'."
+}

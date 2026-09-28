@@ -1,0 +1,5 @@
+.env
+saida/**/*.mp4
+saida/**/*.mov
+saida/**/*.wav
+saida/**/*.mp3
