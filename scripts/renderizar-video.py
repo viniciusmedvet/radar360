@@ -123,7 +123,11 @@ class Fotos:
                 if opcoes:
                     i = self.usadas.get(consulta, 0) % len(opcoes)
                     self.usadas[consulta] = self.usadas.get(consulta, 0) + 1
-                    return self.baixar(opcoes[i])
+                    try:
+                        return self.baixar(opcoes[i])
+                    except Exception as erro:  # falha de rede: segue com o âncora
+                        print("foto:", consulta, erro)
+                        return None
         return None
 
     def baixar(self, foto):
@@ -228,7 +232,14 @@ def miniatura(fundo, texto, destino):
 
 # ---------- áudio ----------
 async def falar(texto, destino):
-    await edge_tts.Communicate(texto, VOZ, rate=VELOCIDADE, pitch=TOM).save(str(destino))
+    for tentativa in range(4):
+        try:
+            await edge_tts.Communicate(texto, VOZ, rate=VELOCIDADE, pitch=TOM).save(str(destino))
+            return
+        except Exception:
+            if tentativa == 3:
+                raise
+            await asyncio.sleep(3 * (tentativa + 1))
 
 
 def duracao(arq):
