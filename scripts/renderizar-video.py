@@ -69,8 +69,18 @@ def blocos(md):
 
 
 def frases(texto):
-    partes = re.split(r"(?<=[.!?…])\s+", re.sub(r"\s+", " ", texto))
-    return [p for p in partes if len(p) > 1]
+    """Frases curtas (≤ 110 caracteres) para legenda de leitura fácil; corta em pontuação."""
+    saida = []
+    for frase in re.split(r"(?<=[.!?…])\s+", re.sub(r"\s+", " ", texto)):
+        pedacos, atual = [], ""
+        for trecho in re.split(r"(?<=[,;:—])\s+", frase):
+            if atual and len(atual) + len(trecho) > 110:
+                pedacos.append(atual)
+                atual = trecho
+            else:
+                atual = f"{atual} {trecho}".strip()
+        saida += pedacos + [atual]
+    return [p for p in saida if len(p) > 1]
 
 
 def assunto(bloco):
@@ -162,32 +172,40 @@ def quadro(fundo, credito, manchete, assunto_txt, legenda, destino, eh_ancora):
     # degradê inferior para leitura
     for i in range(420):
         d.line([(0, H - 420 + i), (W, H - 420 + i)], fill=(0, 8, 24, int(230 * i / 420)))
-    # selo do jornal (canto superior esquerdo) e "AO VIVO"-like tag
-    d.rectangle([60, 50, 60 + 330, 50 + 78], fill=VERMELHO)
-    d.text((82, 62), MARCA, font=f(FB, 50), fill=BRANCO)
-    d.rectangle([60, 128, 60 + 330, 158], fill=AZUL)
-    d.text((82, 131), SLOGAN, font=f(FB, 20), fill=CINZA)
-    # manchete (qual notícia)
-    fm = f(FB, 64)
+    # selo do jornal (canto superior esquerdo)
+    fs = f(FB, 50)
+    ls = d.textlength(MARCA, font=fs) + 48
+    d.rectangle([60, 50, 60 + ls, 128], fill=VERMELHO)
+    d.text((84, 62), MARCA, font=fs, fill=BRANCO)
+    d.rectangle([60, 128, 60 + ls, 158], fill=AZUL)
+    d.text((84, 131), SLOGAN, font=f(FB, 20), fill=CINZA)
+    # legenda (o que está sendo falado): até 2 linhas, fonte reduz se precisar
+    for tam in (46, 40, 34):
+        fl = f(FB, tam)
+        linhas_l = quebrar(d, legenda, fl, W - 280)
+        if len(linhas_l) <= 2:
+            break
+    linhas_l = linhas_l[:3]
+    alt_l = int(tam * 1.3)
+    yl = H - 50 - alt_l * len(linhas_l)
+    # manchete (qual notícia) e faixa do assunto, empilhadas acima da legenda
+    fm = f(FB, 60)
     linhas_m = quebrar(d, manchete.upper(), fm, W - 200)[:2]
-    y0 = H - 400
-    d.rectangle([60, y0 - 12, W - 60, y0 + 80 * len(linhas_m) + 4], fill=AZUL + (235,))
-    d.rectangle([60, y0 - 12, 76, y0 + 80 * len(linhas_m) + 4], fill=VERMELHO)
+    fa = f(FB, 38)
+    ya = yl - 30 - 60
+    y0 = ya - 16 - 76 * len(linhas_m)
+    d.rectangle([60, y0 - 12, W - 60, y0 + 76 * len(linhas_m) + 2], fill=AZUL + (235,))
+    d.rectangle([60, y0 - 12, 76, y0 + 76 * len(linhas_m) + 2], fill=VERMELHO)
     for i, l in enumerate(linhas_m):
-        d.text((100, y0 + i * 80), l, font=fm, fill=BRANCO)
-    # faixa do assunto do bloco
-    fa = f(FB, 40)
-    ya = y0 + 80 * len(linhas_m) + 18
-    d.rectangle([60, ya, 100 + d.textlength(assunto_txt, font=fa) + 40, ya + 62], fill=VERMELHO + (245,))
+        d.text((100, y0 + i * 76), l, font=fm, fill=BRANCO)
+    d.rectangle([60, ya, 100 + d.textlength(assunto_txt, font=fa) + 40, ya + 60], fill=VERMELHO + (245,))
     d.text((100, ya + 8), assunto_txt, font=fa, fill=BRANCO)
-    # legenda (o que está sendo falado)
-    fl = f(FB, 46)
-    yl = ya + 82
-    for i, l in enumerate(legenda[:2]):
+    for i, l in enumerate(linhas_l):
         largura = d.textlength(l, font=fl)
         x = (W - largura) / 2
-        d.rectangle([x - 18, yl + i * 60 - 4, x + largura + 18, yl + i * 60 + 56], fill=(0, 0, 0, 175))
-        d.text((x, yl + i * 60), l, font=fl, fill=(255, 236, 120))
+        y = yl + i * alt_l
+        d.rectangle([x - 18, y - 4, x + largura + 18, y + alt_l - 2], fill=(0, 0, 0, 185))
+        d.text((x, y), l, font=fl, fill=(255, 236, 120))
     if credito:
         d.text((W - 60 - d.textlength(credito, font=f(FR, 20)), 60), credito, font=f(FR, 20), fill=CINZA)
     Image.alpha_composite(base, cam).convert("RGB").save(destino, quality=92)
@@ -255,7 +273,7 @@ def main():
         asyncio.run(falar(frase, mp3))
         achou = None if bloco == "ABERTURA" else fotos.para(frase)
         fundo, credito = achou if achou else (ancora, "Apresentador virtual (imagem gerada por IA)")
-        quadro(fundo, credito, manchete, assunto(bloco), legenda_curta(frase), png, achou is None)
+        quadro(fundo, credito, manchete, assunto(bloco), frase, png, achou is None)
         # leve zoom contínuo (Ken Burns) para dar movimento de telejornal
         seg = duracao(mp3) + 0.25
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-framerate", "25", "-t", f"{seg:.2f}",
