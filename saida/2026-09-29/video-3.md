@@ -1,5 +1,6 @@
 # VÍDEO 3 — O relatório de 218 páginas que colocou o STF no centro do caso Master
 **Publicação:** terça, 29/09/2026, 18:00 BRT · **Eixo:** judiciário
+**Telejornal:** RADAR 360 — O mundo como ele é
 **Levantamento:** segunda, 28/09/2026, 18:45 BRT · **Status:** 🟣 revisão humana e jurídica pendente antes de gravar
 
 ## Títulos (3 opções, até 70 caracteres)

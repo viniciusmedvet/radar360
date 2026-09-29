@@ -1,5 +1,6 @@
 # VÍDEO 1 — Trump quer acordo "antes do inverno pesado": o que isso muda para o Brasil
 **Publicação:** terça, 29/09/2026, 07:00 BRT · **Eixo:** geopolítica
+**Telejornal:** RADAR 360 — O mundo como ele é
 **Levantamento:** segunda, 28/09/2026, 18:45 BRT · **Status:** 🟣 revisão humana pendente antes de gravar
 
 ## Títulos (3 opções, até 70 caracteres)

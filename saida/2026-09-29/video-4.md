@@ -1,5 +1,6 @@
 # VÍDEO 4 — Seis dias para a eleição: empate técnico, dólar em alta e o seu patrimônio
 **Publicação:** terça, 29/09/2026, 21:00 BRT · **Eixo:** negócios / política
+**Telejornal:** RADAR 360 — O mundo como ele é
 **Levantamento:** segunda, 28/09/2026, 18:45 BRT · **Status:** 🟣 revisão humana pendente antes de gravar
 
 ## Títulos (3 opções, até 70 caracteres)

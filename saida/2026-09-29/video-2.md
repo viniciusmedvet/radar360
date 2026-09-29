@@ -1,5 +1,6 @@
 # VÍDEO 2 — Irã diz que a guerra "não acabou": Ormuz, petróleo e o seu combustível
 **Publicação:** terça, 29/09/2026, 12:00 BRT · **Eixo:** geopolítica
+**Telejornal:** RADAR 360 — O mundo como ele é
 **Levantamento:** segunda, 28/09/2026, 18:45 BRT · **Status:** 🟣 revisão humana pendente antes de gravar
 
 ## Títulos (3 opções, até 70 caracteres)
