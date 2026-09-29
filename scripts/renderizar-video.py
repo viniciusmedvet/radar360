@@ -285,12 +285,11 @@ def main():
         achou = None if bloco == "ABERTURA" else fotos.para(frase)
         fundo, credito = achou if achou else (ancora, "Apresentador virtual (imagem gerada por IA)")
         quadro(fundo, credito, manchete, assunto(bloco), frase, png, achou is None)
-        # leve zoom contínuo (Ken Burns) para dar movimento de telejornal
+        # imagem fixa por frase (a troca de quadro a cada frase dá o ritmo); render rápido para o servidor grátis
         seg = duracao(mp3) + 0.25
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-framerate", "25", "-t", f"{seg:.2f}",
                         "-i", str(png), "-i", str(mp3),
-                        "-vf", f"scale=2112:1188,zoompan=z='min(1+on/{int(seg*25)}*0.05,1.05)':d=1:s={W}x{H}:fps=25",
-                        "-c:v", "libx264", "-preset", "veryfast", "-pix_fmt", "yuv420p",
+                        "-c:v", "libx264", "-preset", "ultrafast", "-tune", "stillimage", "-pix_fmt", "yuv420p",
                         "-c:a", "aac", "-b:a", "160k", "-ar", "44100", "-af", "apad", "-t", f"{seg:.2f}", str(mp4)],
                        check=True)
     partes = sorted(tmp.glob("[0-9][0-9][0-9].mp4"))
