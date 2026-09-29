@@ -8,7 +8,7 @@
 
 Uso: python renderizar-video.py video-1.md saida_dir --ancora ancora.jpg
 """
-import argparse, asyncio, html, io, json, re, subprocess, textwrap
+import argparse, asyncio, hashlib, html, io, json, re, subprocess, textwrap
 from pathlib import Path
 
 import edge_tts
@@ -117,7 +117,7 @@ class Fotos:
         return None
 
     def baixar(self, foto):
-        destino = self.pasta / (re.sub(r"\W", "", foto["url"])[-60:] + ".jpg")
+        destino = self.pasta / (hashlib.sha1(foto["url"].encode()).hexdigest()[:16] + ".jpg")
         if not destino.exists():
             img = Image.open(io.BytesIO(self.s.get(foto["url"], timeout=30).content)).convert("RGB")
             preencher(img).save(destino, quality=90)
