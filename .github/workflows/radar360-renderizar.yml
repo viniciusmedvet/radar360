@@ -6,6 +6,8 @@ on:
   push:
     paths:
       - "saida/*/video-*.md"
+      - ".github/workflows/radar360-renderizar.yml"
+      - "scripts/renderizar-video.py"
   workflow_dispatch:
     inputs:
       data:
