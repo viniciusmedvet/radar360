@@ -2,6 +2,14 @@
   "_leia": "Fontes de imagens e trechos de vídeo PERMITIDAS no RADAR 360 (canal monetizado). Regra de ouro: só entra material cuja licença permita uso COMERCIAL e EDIÇÃO (recorte). Citar a fonte é obrigatório, mas NÃO substitui a licença. Proibido: trechos de emissoras (Globo, Band, SBT, Record, CNN, GloboNews etc.) e de canais comuns do YouTube sem licença Creative Commons, e baixar vídeos do YouTube que não sejam CC BY. Licenças verificadas em 01/10/2026 — reconfirmar a cada 90 dias.",
   "permitidas": [
     {
+      "fonte": "Pexels — vídeos e fotos de banco (cenas genéricas: clínica, laboratório, animais, cidades, indústria)",
+      "licenca": "Licença Pexels: uso comercial e edição permitidos, sem atribuição obrigatória (o RADAR 360 credita mesmo assim)",
+      "uso": "Somente cenas genéricas (B-roll). NUNCA para representar uma pessoa real citada na reportagem, nem em contexto que constranja quem aparece.",
+      "credito": "Vídeo: <autor> · Pexels",
+      "acesso": "API gratuita: segredo PEXELS_API_KEY no GitHub (sem a chave, o renderizador usa só o Wikimedia Commons)",
+      "verificado_em": "https://www.pexels.com/license/"
+    },
+    {
       "fonte": "YouTube — vídeos com licença Creative Commons Atribuição (CC BY)",
       "como_achar": "Busca do YouTube > Filtros > Recursos > Creative Commons; conferir 'Licença: Creative Commons Atribuição' na descrição do vídeo",
       "uso": "Recorte e reutilização permitidos, inclusive em canal monetizado",
@@ -56,13 +64,26 @@
     }
   ],
   "proibidas": [
-    {"fonte": "Presidência da Ucrânia (president.gov.ua)", "motivo": "CC BY-NC-ND desde out/2022 — não comercial. Exceção: material publicado antes de 04/10/2022 (CC BY 4.0) via Wikimedia Commons."},
-    {"fonte": "Reportagens, noticiários e programas da TV Câmara", "motivo": "CC BY-NC-ND — não comercial"},
-    {"fonte": "Emissoras comerciais e canais do YouTube sem CC BY", "motivo": "Content ID: reivindicação, bloqueio ou strike; citar a fonte não autoriza o uso"},
-    {"fonte": "Fotos de agências privadas (Reuters, AP, AFP, Getty, Folhapress etc.)", "motivo": "Licença paga"}
+    {
+      "fonte": "Presidência da Ucrânia (president.gov.ua)",
+      "motivo": "CC BY-NC-ND desde out/2022 — não comercial. Exceção: material publicado antes de 04/10/2022 (CC BY 4.0) via Wikimedia Commons."
+    },
+    {
+      "fonte": "Reportagens, noticiários e programas da TV Câmara",
+      "motivo": "CC BY-NC-ND — não comercial"
+    },
+    {
+      "fonte": "Emissoras comerciais e canais do YouTube sem CC BY",
+      "motivo": "Content ID: reivindicação, bloqueio ou strike; citar a fonte não autoriza o uso"
+    },
+    {
+      "fonte": "Fotos de agências privadas (Reuters, AP, AFP, Getty, Folhapress etc.)",
+      "motivo": "Licença paga"
+    }
   ],
   "lip_sync": {
     "_leia": "Âncora com sincronização labial apenas na abertura (≈15–20 s) e, se sobrar crédito, no fechamento. Uma conta gratuita por plataforma (várias contas na mesma plataforma violam os termos). Limites reais anotados aqui após verificação na conta de cada plataforma; sem crédito no dia → âncora em imagem fixa.",
     "plataformas": []
-  }
+  },
+  "_como_o_renderizador_escolhe": "1) [TRECHO] com URL commons.wikimedia.org/wiki/File:...; 2) pessoa/lugar da frase (só Commons); 3) 'busca:' do roteiro (Pexels + Commons, vídeo antes de foto); 4) continua o clipe anterior; 5) âncora."
 }

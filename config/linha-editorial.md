@@ -108,7 +108,26 @@ Escolha sempre as notícias de maior impacto das últimas 24 horas.
 6. **8:30–9:40 — Bloco 4: o que vem a seguir** (próximas datas, cenários claramente rotulados como cenários)
 7. **9:40–10:00 — Fechamento** + pergunta para os comentários
 
-Marque sugestões de imagem entre colchetes: `[B-ROLL: ...]`, `[GRÁFICO: ...]`, `[TELA: ...]`.
+Marque as imagens entre colchetes, **no mínimo uma por parágrafo**; o renderizador lê estas
+marcações e busca vídeos e fotos de licença livre automaticamente:
+
+- `[B-ROLL: descrição em português | busca: termo curto em inglês]` — cena genérica, vira vídeo de
+  banco (Pexels/Wikimedia). Ex.: `[B-ROLL: veterinária examina gato | busca: veterinarian examining cat]`.
+  Varie as buscas ao longo do roteiro (2 a 3 por bloco) para a imagem mudar com a fala.
+- `[B-ROLL: ... | pessoa: Nome Completo]` — pessoa ou lugar real: só Wikimedia Commons, nunca
+  figurante de banco de imagens.
+- `[TRECHO: fonte · título · data · URL · licença]` — com URL `commons.wikimedia.org/wiki/File:...`
+  o arquivo exato entra no vídeo; outras URLs servem de registro para edição manual.
+- `[GRÁFICO: ...]`, `[TELA: ...]` — registro editorial (ainda não renderizados).
+
+## 4.1 Formatos por plataforma (gerados a partir do mesmo roteiro)
+
+- **YouTube e Facebook:** vídeo completo 16:9 (1920×1080) + capítulos na descrição.
+- **Instagram Reels, TikTok e YouTube Shorts:** corte vertical 9:16 (1080×1920) de até ~58 s,
+  começando no gancho (sem a abertura de agradecimento) e terminando com a chamada para o vídeo
+  completo. Por isso o **gancho (0:00–0:30) precisa se sustentar sozinho**: fato forte, número,
+  pergunta; nada de "neste vídeo vamos ver".
+- O texto na tela fica fora das áreas cobertas pela interface dos aplicativos.
 
 ## 5. Formato de saída obrigatório (Markdown)
 

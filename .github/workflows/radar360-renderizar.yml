@@ -1,9 +1,11 @@
 name: RADAR 360 — renderizar vídeos
 
-# Monta os vídeos do dia (voz neural, fotos Wikimedia Commons, âncora, legendas) e publica os
-# arquivos como Release do GitHub, de onde a etapa de publicação sobe para o YouTube.
+# Monta os vídeos do dia em paralelo (um job por roteiro): versão 16:9 para YouTube/Facebook,
+# corte vertical 9:16 (até ~58 s) para Reels/TikTok/Shorts, miniatura e capítulos. Publica tudo
+# como Release do GitHub, de onde a rotina do Claude envia para as plataformas.
 on:
   push:
+    branches: [main]
     paths:
       - "saida/*/video-*.md"
       - ".github/workflows/radar360-renderizar.yml"
@@ -13,6 +15,10 @@ on:
       data:
         description: "Pasta do dia (AAAA-MM-DD). Vazio = hoje em Brasília"
         required: false
+      publicar_release:
+        description: "Publicar a Release do dia (false = só artefatos, para teste)"
+        required: false
+        default: "true"
 
 permissions:
   contents: write
@@ -22,41 +28,76 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  renderizar:
+  preparar:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    outputs:
+      data: ${{ steps.dia.outputs.data }}
+      videos: ${{ steps.dia.outputs.videos }}
     steps:
       - uses: actions/checkout@v4
-      - name: Dependências
-        run: |
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
-          pip install -q edge-tts requests pillow
-      - name: Descobrir a pasta do dia
+      - name: Descobrir a pasta do dia e os roteiros
         id: dia
         run: |
           D="${{ inputs.data }}"
           [ -z "$D" ] && D=$(TZ=America/Sao_Paulo date +%F)
           [ -d "saida/$D" ] || D=$(ls -d saida/20* | sort | tail -1 | xargs basename)
           echo "data=$D" >> "$GITHUB_OUTPUT"
+          echo "videos=$(ls saida/$D/video-*.md | xargs -n1 basename | sed 's/\.md$//' | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
+
+  renderizar:
+    needs: preparar
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        video: ${{ fromJson(needs.preparar.outputs.videos) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependências
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
+          pip install -q edge-tts requests pillow
       - name: Âncora
         run: |
           mkdir -p render
           if [ -f assets/ancora.jpg ]; then cp assets/ancora.jpg render/ancora.jpg
           else curl -sfL -o render/ancora.jpg "https://cdn.gamma.app/v5mnqrma2d2kzs4/design-anything/bVTppfApS1f3qMfmWLxM8/YXynB-t5gMYz2ztharK_4.jpg"; fi
-      - name: Renderizar
+      - name: Renderizar ${{ matrix.video }}
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: |
-          D=saida/${{ steps.dia.outputs.data }}
-          for f in $D/video-*.md; do
-            python3 scripts/renderizar-video.py "$f" render --ancora render/ancora.jpg || \
-            python3 scripts/renderizar-video.py "$f" render --ancora render/ancora.jpg
-          done
-          ls -la render/*.mp4 render/*.jpg
+          F=saida/${{ needs.preparar.outputs.data }}/${{ matrix.video }}.md
+          python3 scripts/renderizar-video.py "$F" render --ancora render/ancora.jpg || \
+          python3 scripts/renderizar-video.py "$F" render --ancora render/ancora.jpg
+          ls -la render/${{ matrix.video }}*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.video }}
+          path: |
+            render/${{ matrix.video }}.mp4
+            render/${{ matrix.video }}-vertical.mp4
+            render/${{ matrix.video }}.jpg
+            render/${{ matrix.video }}-capitulos.txt
+          retention-days: 7
+
+  publicar:
+    needs: [preparar, renderizar]
+    if: ${{ always() && needs.preparar.result == 'success' && inputs.publicar_release != 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: render
+          merge-multiple: true
       - name: Publicar arquivos como Release
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
-          TAG="radar360-${{ steps.dia.outputs.data }}"
+          ls -la render
+          TAG="radar360-${{ needs.preparar.outputs.data }}"
           gh release delete "$TAG" -y --cleanup-tag 2>/dev/null || true
-          gh release create "$TAG" render/video-*.mp4 render/video-*.jpg \
-            --target "${{ github.sha }}" --title "RADAR 360 — ${{ steps.dia.outputs.data }}" \
-            --notes "Vídeos renderizados automaticamente. Publicação no YouTube pela rotina do Claude."
+          gh release create "$TAG" render/* --target "${{ github.sha }}" \
+            --title "RADAR 360 — ${{ needs.preparar.outputs.data }}" \
+            --notes "Vídeos renderizados automaticamente (16:9, vertical 9:16, miniatura e capítulos). Publicação pela rotina do Claude."
