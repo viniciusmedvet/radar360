@@ -48,4 +48,4 @@ for o RADAR365. Só será criada com o "sim" do Vinícius (regra 4 da skill-maes
 
 ## Histórico
 
-- 01/10/2026: mapa criado. Teste de renderização v3 no GitHub Actions: 4 de 4 vídeos ok.
+- 01/10/2026: mapa criado. Teste de renderização v3 no GitHub Actions (2 rodadas): 4 de 4 vídeos ok. Vídeo 2 de 29/09: 35 trechos em vídeo, 27 em foto, 13 com âncora (75 frases), sem Pexels e com roteiro ainda sem marcações.
