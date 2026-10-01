@@ -53,6 +53,20 @@ Cada vídeo segue a mesma ordem: YouTube primeiro, porque as redes levam o link 
 | 3 · STF e Três Poderes | 17:50 | 18:00 | 18:05 | 18:10 | 18:15 |
 | 4 · dinheiro e poder | 20:50 | 21:00 | 21:05 | 21:10 | 21:15 |
 
+**Formato por plataforma** (todos gerados do mesmo roteiro pelo renderizador):
+
+| Arquivo | Formato | Vai para |
+|---|---|---|
+| `video-N.mp4` | 16:9, 1920×1080, completo | YouTube, Facebook |
+| `video-N-vertical.mp4` | 9:16, 1080×1920, até ~58 s a partir do gancho | Instagram Reels, TikTok, YouTube Shorts (1/dia se houver cota) |
+| `video-N.jpg` | 1280×720 | miniatura do YouTube |
+| `video-N-capitulos.txt` | capítulos | descrição do YouTube |
+
+Imagens: o renderizador troca o fundo a cada frase usando trechos de **vídeo** e fotos de licença
+livre (Wikimedia Commons; Pexels se o segredo `PEXELS_API_KEY` existir), escolhidos pelas
+marcações `busca:`/`pessoa:` do roteiro. Fotos ganham movimento lento; o âncora só entra quando
+não há imagem adequada.
+
 21:30: relatório do dia (`saida/AAAA-MM-DD/relatorio.md`) e resumo com os links.
 
 **TikTok (exclusivo):** só a conta criada para o RADAR 360 (alias `radar360-tiktok` no Composio, @usuário em
