@@ -1,0 +1,46 @@
+name: RADAR 360 — gerar roteiros via API (manual, opcional e pago)
+
+on:
+  workflow_dispatch:
+    inputs:
+      data_publicacao:
+        description: "Data de publicação (AAAA-MM-DD). Vazio = hoje em Brasília"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: radar360-gerar-api
+  cancel-in-progress: false
+
+jobs:
+  produzir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      DATA_PUBLICACAO: ${{ inputs.data_publicacao }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - name: Coletar referências dos canais
+        run: node scripts/coletar-fontes.mjs
+        continue-on-error: true # sem coleta, o gerador pesquisa as notícias sozinho
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      - name: Gerar roteiros e textos verificados
+        run: node scripts/gerar-conteudo.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Versionar a produção do dia
+        run: |
+          git config user.name "radar360-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add saida
+          git commit -m "Canal de notícias: produção de $(TZ=America/Sao_Paulo date +%F)" || echo "Nada novo para versionar"
+          git push

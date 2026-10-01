@@ -1,0 +1,60 @@
+name: RADAR 360 — renderizar vídeos
+
+# Monta os vídeos do dia (voz neural, fotos Wikimedia Commons, âncora, legendas) e publica os
+# arquivos como Release do GitHub, de onde a etapa de publicação sobe para o YouTube.
+on:
+  push:
+    paths:
+      - "saida/*/video-*.md"
+  workflow_dispatch:
+    inputs:
+      data:
+        description: "Pasta do dia (AAAA-MM-DD). Vazio = hoje em Brasília"
+        required: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: radar360-render-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  renderizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependências
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
+          pip install -q edge-tts requests pillow
+      - name: Descobrir a pasta do dia
+        id: dia
+        run: |
+          D="${{ inputs.data }}"
+          [ -z "$D" ] && D=$(TZ=America/Sao_Paulo date +%F)
+          [ -d "saida/$D" ] || D=$(ls -d saida/20* | sort | tail -1 | xargs basename)
+          echo "data=$D" >> "$GITHUB_OUTPUT"
+      - name: Âncora
+        run: |
+          mkdir -p render
+          if [ -f assets/ancora.jpg ]; then cp assets/ancora.jpg render/ancora.jpg
+          else curl -sfL -o render/ancora.jpg "https://cdn.gamma.app/v5mnqrma2d2kzs4/design-anything/bVTppfApS1f3qMfmWLxM8/YXynB-t5gMYz2ztharK_4.jpg"; fi
+      - name: Renderizar
+        run: |
+          D=saida/${{ steps.dia.outputs.data }}
+          for f in $D/video-*.md; do
+            python3 scripts/renderizar-video.py "$f" render --ancora render/ancora.jpg || \
+            python3 scripts/renderizar-video.py "$f" render --ancora render/ancora.jpg
+          done
+          ls -la render/*.mp4 render/*.jpg
+      - name: Publicar arquivos como Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="radar360-${{ steps.dia.outputs.data }}"
+          gh release delete "$TAG" -y --cleanup-tag 2>/dev/null || true
+          gh release create "$TAG" render/video-*.mp4 render/video-*.jpg \
+            --target "${{ github.sha }}" --title "RADAR 360 — ${{ steps.dia.outputs.data }}" \
+            --notes "Vídeos renderizados automaticamente. Publicação no YouTube pela rotina do Claude."

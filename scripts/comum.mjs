@@ -40,7 +40,7 @@ export async function lerJson(arquivo, padrao) {
 export function exigirEnv(...nomes) {
   const faltando = nomes.filter((n) => !process.env[n]);
   if (faltando.length) {
-    console.error(`Variáveis de ambiente ausentes: ${faltando.join(", ")} (ver canal-noticias/.env.example)`);
+    console.error(`Variáveis de ambiente ausentes: ${faltando.join(", ")} (ver .env.example)`);
     process.exit(1);
   }
 }

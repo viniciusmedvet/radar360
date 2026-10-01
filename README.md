@@ -1,4 +1,11 @@
-# Canal de notícias: produção diária automatizada
+# RADAR 360 — O mundo como ele é
+
+Telejornal diário automatizado: investigação, checagem, roteiros, vídeos e publicação no YouTube, Facebook, Instagram e X.
+
+**Para incluir temas:** edite `grade_diaria` em `config/fontes.json`.
+**Fontes de imagem/vídeo permitidas:** `config/fontes-midia.json`.
+
+## Produção diária
 
 Este sistema faz a pesquisa, a checagem e os roteiros do canal todos os dias, e depois agenda a
 publicação no YouTube:
@@ -68,7 +75,6 @@ Você   →  revisa → grava ou renderiza os .mp4 → npm run publicar  →  Yo
 ## Comandos
 
 ```bash
-cd canal-noticias
 npm install
 npm run coletar            # precisa de YOUTUBE_API_KEY
 npm run gerar              # precisa de ANTHROPIC_API_KEY
