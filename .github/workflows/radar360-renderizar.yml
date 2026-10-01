@@ -68,9 +68,12 @@ jobs:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: |
           F=saida/${{ needs.preparar.outputs.data }}/${{ matrix.video }}.md
-          python3 scripts/renderizar-video.py "$F" render --ancora render/ancora.jpg || \
-          python3 scripts/renderizar-video.py "$F" render --ancora render/ancora.jpg
-          ls -la render/${{ matrix.video }}*
+          python3 scripts/renderizar-video.py "$F" render --ancora render/ancora.jpg > stats.txt || \
+          python3 scripts/renderizar-video.py "$F" render --ancora render/ancora.jpg > stats.txt
+          cat stats.txt
+          echo "### ${{ matrix.video }}" >> "$GITHUB_STEP_SUMMARY"
+          tail -1 stats.txt >> "$GITHUB_STEP_SUMMARY"
+          ls -la render/${{ matrix.video }}.mp4 render/${{ matrix.video }}-* render/${{ matrix.video }}.jpg
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.video }}
