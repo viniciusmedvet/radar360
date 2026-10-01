@@ -1,4 +1,4 @@
-name: RADAR 365 — renderizar vídeos
+name: RADAR365 — renderizar vídeos
 
 # Monta os vídeos do dia em paralelo (um job por roteiro): versão 16:9 para YouTube/Facebook,
 # corte vertical 9:16 (até ~58 s) para Reels/TikTok/Shorts, miniatura e capítulos. Publica tudo
@@ -102,5 +102,5 @@ jobs:
           TAG="radar365-${{ needs.preparar.outputs.data }}"
           gh release delete "$TAG" -y --cleanup-tag 2>/dev/null || true
           gh release create "$TAG" render/* --target "${{ github.sha }}" \
-            --title "RADAR 365 — ${{ needs.preparar.outputs.data }}" \
+            --title "RADAR365 — ${{ needs.preparar.outputs.data }}" \
             --notes "Vídeos renderizados automaticamente (16:9, vertical 9:16, miniatura e capítulos). Publicação pela rotina do Claude."

@@ -59,7 +59,7 @@ def banner():
     d = ImageDraw.Draw(img)
     # área segura do YouTube (aparece em todos os aparelhos): 1546x423 centralizada
     x0, y0 = (W - 1546) // 2, (H - 423) // 2
-    centro(d, y0 + 18, "RADAR 365", f(FB, 150), W, BRANCO)
+    centro(d, y0 + 18, "RADAR365", f(FB, 150), W, BRANCO)
     d.rectangle([W // 2 - 300, y0 + 192, W // 2 + 300, y0 + 200], fill=VERMELHO)
     centro(d, y0 + 222, "O MUNDO PELA LENTE DA SAÚDE E DA CIÊNCIA", f(FB, 50), W, BRANCO)
     centro(d, y0 + 300, "O mundo como ele é — com fonte.", f(FR, 46), W, CINZA)

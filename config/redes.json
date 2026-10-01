@@ -1,0 +1,17 @@
+{
+  "_leia": "Contas oficiais onde o RADAR365 publica. Só publique em contas listadas aqui. Contas pessoais/profissionais do Vinícius NUNCA entram nesta lista.",
+  "youtube": {
+    "canal": "Radar-360 | CURIOSIDADE ILIMITADA",
+    "handle": "@curiosidadeiltda",
+    "channel_id": "UCuUUqOrl94UCYcvjObiaEWA",
+    "composio_account": "youtube_singey-cheap"
+  },
+  "facebook": null,
+  "instagram": null,
+  "x": null,
+  "proibidas": [
+    {"rede": "youtube", "conta": "@viniciusmedvet (canal pessoal)", "composio_account": "youtube_triad-ballan"},
+    {"rede": "facebook", "conta": "Vinícius Rocha Médico Veterinário (perfil profissional)"},
+    {"rede": "instagram", "conta": "@viniciuscanalespecialistas (perfil profissional)"}
+  ]
+}

@@ -1,4 +1,4 @@
-# RADAR 365 — O mundo como ele é
+# RADAR365 — O mundo como ele é
 
 **Missão:** informar profissionais da saúde e das ciências biológicas sobre tudo o que acontece no
 mundo e mostrar, com fonte, como cada fato chega à rotina de cada profissão.
@@ -26,13 +26,13 @@ publicação no YouTube:
 
 ## Identidade do canal
 
-- Nome: **RADAR 365 | Ciência e Mundo** · slogan "O mundo como ele é — com fonte."
+- Nome: **RADAR365 | Ciência e Mundo** · slogan "O mundo como ele é — com fonte."
 - Banner (2560×1440) e foto de perfil (800×800) em `assets/canal/`, gerados por
   `python3 scripts/gerar-identidade.py` (cores e fontes do renderizador).
 
 ## Fluxo
 
-A rotina diária do Claude ("RADAR 365 — produção e publicação diária") começa às **06:30**:
+A rotina diária do Claude ("RADAR365 — produção e publicação diária") começa às **06:30**:
 
 ```
 06:30  Rotina do Claude  →  pesquisa, checagem, 4 roteiros + publicacao.json
@@ -43,8 +43,11 @@ A rotina diária do Claude ("RADAR 365 — produção e publicação diária") c
 
 ### Agenda diária de publicação (horário de Brasília)
 
-**Canal do YouTube (exclusivo):** [RADAR 365 | Ciência e Mundo](https://www.youtube.com/@curiosidadeiltda)
+**Canal do YouTube (exclusivo):** [RADAR365 | Ciência e Mundo](https://www.youtube.com/@curiosidadeiltda)
 (`UCuUUqOrl94UCYcvjObiaEWA`). Antes de cada envio, a rotina confere esse ID e, se não bater, não publica.
+
+**Contas de publicação:** só as listadas em `config/redes.json`. Facebook e Instagram estão
+**suspensos** até existir conta própria do RADAR365 (as conectadas são perfis profissionais do Vinícius).
 
 Cada vídeo segue a mesma ordem: YouTube primeiro, porque as redes levam o link dele.
 
@@ -72,7 +75,7 @@ não há imagem adequada.
 
 21:30: relatório do dia (`saida/AAAA-MM-DD/relatorio.md`) e resumo com os links.
 
-**TikTok (exclusivo):** só a conta criada para o RADAR 365 (alias `radar365-tiktok` no Composio, @usuário em
+**TikTok (exclusivo):** só a conta criada para o RADAR365 (alias `radar365-tiktok` no Composio, @usuário em
 `agenda_publicacao`). Se o TikTok recusar o modo público (app não auditado), o vídeo fica privado e a rotina avisa.
 
 X e TikTok entram quando forem conectados no Composio; até lá a rotina pula e registra no relatório.

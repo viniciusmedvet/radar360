@@ -101,7 +101,7 @@
   ],
   "_grade_nota": "A produção começa às 06:30 (rotina diária do Claude). O 1º vídeo saiu das 07:00 para as 10:00 porque pesquisa + checagem + renderização não cabem em 30 min. Horários de trabalho, não comprovados por dados do canal: reavaliar após 14 dias com YouTube Studio > Análise > 'Quando seus espectadores estão no YouTube'.",
   "agenda_publicacao": {
-    "_leia": "YouTube: publicar SOMENTE no canal @curiosidadeiltda (channelId UCuUUqOrl94UCYcvjObiaEWA), nunca no canal pessoal @viniciusmedvet. Ordem de publicação de CADA vídeo da grade_diaria. Minutos relativos ao horario_brt do slot. O YouTube vem primeiro porque as redes levam o link dele.",
+    "_leia": "Contas de destino: SOMENTE as listadas em config/redes.json (fonte da verdade). Facebook e Instagram: suspensos até haver conta própria do RADAR365 (as conectadas são perfis profissionais do Vinícius). Ordem de publicação de CADA vídeo da grade_diaria. Minutos relativos ao horario_brt do slot. O YouTube vem primeiro porque as redes levam o link dele.",
     "inicio_producao_brt": "06:30",
     "prazo_roteiros_brt": "08:15",
     "prazo_renderizacao_brt": "09:30",
@@ -109,7 +109,7 @@
       {
         "minuto": -10,
         "plataforma": "youtube",
-        "canal": "RADAR 365 | Ciência e Mundo (@curiosidadeiltda; nome antigo: Radar-360 | CURIOSIDADE ILIMITADA)",
+        "canal": "RADAR365 | Ciência e Mundo (@curiosidadeiltda; nome antigo: Radar-360 | CURIOSIDADE ILIMITADA)",
         "channelId": "UCuUUqOrl94UCYcvjObiaEWA",
         "conta": "youtube_singey-cheap",
         "exclusivo": true,
@@ -119,16 +119,16 @@
       {
         "minuto": 0,
         "plataforma": "facebook",
-        "conta": "facebook_chick-robin",
+        "conta": "",
         "formato": "vídeo na página + 'Texto para redes sociais' + link do YouTube",
-        "conexao": "ativa"
+        "conexao": "suspenso: criar conta própria do RADAR365 e listar em config/redes.json"
       },
       {
         "minuto": 5,
         "plataforma": "instagram",
-        "conta": "instagram_barman-lagend",
+        "conta": "",
         "formato": "Reels + 'Texto para redes sociais' + link do YouTube",
-        "conexao": "ativa"
+        "conexao": "suspenso: criar conta própria do RADAR365 e listar em config/redes.json"
       },
       {
         "minuto": 10,
@@ -144,7 +144,7 @@
         "conta": "radar365-tiktok",
         "exclusivo": true,
         "formato": "vídeo + texto do roteiro + chamada para o YouTube; rótulo de conteúdo gerado por IA",
-        "conexao": "pendente: criar a conta TikTok do RADAR 365, conectar no Composio (alias radar365-tiktok) e preencher 'usuario'"
+        "conexao": "pendente: criar a conta TikTok do RADAR365, conectar no Composio (alias radar365-tiktok) e preencher 'usuario'"
       }
     ],
     "fechamento_brt": "21:30"
@@ -165,7 +165,7 @@
     "tutores e curiosos de saúde, medicina e tecnologia"
   ],
   "identidade_canal": {
-    "nome": "RADAR 365 | Ciência e Mundo",
+    "nome": "RADAR365 | Ciência e Mundo",
     "slogan": "O mundo como ele é — com fonte.",
     "banner": "assets/canal/banner-youtube.png",
     "perfil": "assets/canal/perfil.png",

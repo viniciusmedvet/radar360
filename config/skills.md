@@ -1,6 +1,6 @@
-# Gestão de skills, plugins e conectores — RADAR 365
+# Gestão de skills, plugins e conectores — RADAR365
 
-Mapa mantido pela skill-maestro. A rotina diária consulta este arquivo no início, usa o recurso
+Mapa mantido pela skill-maestro. Contas de publicação: `config/redes.json` manda. A rotina diária consulta este arquivo no início, usa o recurso
 indicado em cada etapa e registra no `relatorio.md` qualquer lacuna ou falha ("Gestão de skills").
 Revisão: a cada 7 dias ou quando uma etapa falhar 2 vezes seguidas.
 
@@ -24,7 +24,7 @@ Legenda: ✅ ativo · 🟡 disponível, falta instalar/conectar · ❌ lacuna (s
 | Miniaturas e artes especiais | Conector **Canva** | ✅ conectado | quando a miniatura automática não bastar |
 | Identidade do canal | `scripts/gerar-identidade.py` | ✅ | banner e foto de perfil |
 | Publicação YouTube | Composio `youtube_singey-cheap` (@curiosidadeiltda) | ✅ conectado · 🟡 ativar o Composio na rotina | canal exclusivo |
-| Publicação Facebook e Instagram | Composio `facebook_chick-robin`, `instagram_barman-lagend` | ✅ conectado | Reels com o corte vertical |
+| Publicação Facebook e Instagram | conta própria do RADAR365 (a criar) | ❌ suspenso: as contas conectadas são perfis profissionais do Vinícius e estão proibidas em `config/redes.json` | — |
 | Publicação TikTok | Composio TikTok (alias `radar365-tiktok`) | ❌ conta ainda não criada | — |
 | Publicação X | Composio Twitter | 🟡 conectar | — |
 | Texto para redes e SEO | Plugin **Marketing** (Anthropic: content-creation, seo-audit, performance-report) | 🟡 instalar | títulos, descrições e relatório de desempenho |
@@ -44,7 +44,7 @@ Legenda: ✅ ativo · 🟡 disponível, falta instalar/conectar · ❌ lacuna (s
 
 **radar365-redacao**: concentraria a missão, a linha editorial, as regras de cães e gatos, as
 marcações de imagem e o checklist de publicação numa skill própria, ativada sempre que o assunto
-for o RADAR 365. Só será criada com o "sim" do Vinícius (regra 4 da skill-maestro).
+for o RADAR365. Só será criada com o "sim" do Vinícius (regra 4 da skill-maestro).
 
 ## Histórico
 
