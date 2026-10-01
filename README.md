@@ -45,6 +45,9 @@ Cada vídeo segue a mesma ordem: YouTube primeiro, porque as redes levam o link 
 
 21:30: relatório do dia (`saida/AAAA-MM-DD/relatorio.md`) e resumo com os links.
 
+**TikTok (exclusivo):** só a conta criada para o RADAR 360 (alias `radar360-tiktok` no Composio, @usuário em
+`agenda_publicacao`). Se o TikTok recusar o modo público (app não auditado), o vídeo fica privado e a rotina avisa.
+
 X e TikTok entram quando forem conectados no Composio; até lá a rotina pula e registra no relatório.
 A ordem e os minutos ficam em `agenda_publicacao`, em `config/fontes.json`.
 

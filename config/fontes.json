@@ -95,7 +95,7 @@
       { "minuto": 0, "plataforma": "facebook", "conta": "facebook_chick-robin", "formato": "vídeo na página + 'Texto para redes sociais' + link do YouTube", "conexao": "ativa" },
       { "minuto": 5, "plataforma": "instagram", "conta": "instagram_barman-lagend", "formato": "Reels + 'Texto para redes sociais' + link do YouTube", "conexao": "ativa" },
       { "minuto": 10, "plataforma": "x", "conta": "", "formato": "texto de até 280 caracteres + link do YouTube", "conexao": "pendente: conectar Twitter no Composio" },
-      { "minuto": 15, "plataforma": "tiktok", "conta": "", "formato": "vídeo + texto (API só publica em modo público após auditoria do app)", "conexao": "pendente: conectar TikTok no Composio; até lá, TikTok Studio manual" }
+      { "minuto": 15, "plataforma": "tiktok", "usuario": "", "conta": "radar360-tiktok", "exclusivo": true, "formato": "vídeo + texto do roteiro + chamada para o YouTube; rótulo de conteúdo gerado por IA", "conexao": "pendente: criar a conta TikTok do RADAR 360, conectar no Composio (alias radar360-tiktok) e preencher 'usuario'" }
     ],
     "fechamento_brt": "21:30"
   }
