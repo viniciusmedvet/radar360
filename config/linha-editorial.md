@@ -34,6 +34,17 @@ Escolha sempre as notícias de maior impacto das últimas 24 horas.
   instituto, data e margem de erro.
 - Conteúdo sobre investimentos é **educativo**, nunca recomendação individual de compra/venda.
 
+## 2.1 Imagens e trechos de vídeo (termos do YouTube)
+
+- Use SOMENTE as fontes de `config/fontes-midia.json`, com licença que permita uso comercial
+  e edição. Citar a fonte é obrigatório, mas não autoriza o uso de material protegido.
+- Proibido: trechos de emissoras e de canais sem licença CC BY, fotos de agências privadas,
+  material "não comercial" (NC) ou "sem derivações" (ND).
+- Para cada trecho sugerido no roteiro, marque `[TRECHO: fonte · título · data · URL · licença]`
+  e o crédito exato que vai na tela e na descrição.
+- O vídeo precisa ter contribuição original (análise, contexto, narração): trechos ilustram,
+  não substituem o conteúdo — exigência da política de conteúdo reutilizado do YouTube.
+
 ## 3. Narrativa de alto impacto (a emoção vem dos fatos)
 
 - Abra com um gancho de até 30 segundos: a cena mais forte, a pergunta que o espectador não

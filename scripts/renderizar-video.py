@@ -107,7 +107,9 @@ class Fotos:
                 ii = p["imageinfo"][0]
                 meta = ii.get("extmetadata", {})
                 lic = meta.get("LicenseShortName", {}).get("value", "")
-                if not lic.startswith(LICENCAS_OK) or ii.get("width", 0) < 900 or ii["width"] < ii["height"] * 0.9:
+                # canal monetizado: só licenças que permitem uso comercial e edição (nada de NC/ND)
+                if (not lic.startswith(LICENCAS_OK) or re.search(r"\bNC\b|\bND\b", lic)
+                        or ii.get("width", 0) < 900 or ii["width"] < ii["height"] * 0.9):
                     continue
                 autor = html.unescape(re.sub(r"<[^>]+>", "", meta.get("Artist", {}).get("value", ""))).strip()
                 achadas.append({"url": ii["thumburl"], "credito": f"Foto: {autor[:60] or 'Wikimedia Commons'} · {lic} · Wikimedia Commons"})

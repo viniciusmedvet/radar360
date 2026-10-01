@@ -1,0 +1,68 @@
+{
+  "_leia": "Fontes de imagens e trechos de vídeo PERMITIDAS no RADAR 360 (canal monetizado). Regra de ouro: só entra material cuja licença permita uso COMERCIAL e EDIÇÃO (recorte). Citar a fonte é obrigatório, mas NÃO substitui a licença. Proibido: trechos de emissoras (Globo, Band, SBT, Record, CNN, GloboNews etc.) e de canais comuns do YouTube sem licença Creative Commons, e baixar vídeos do YouTube que não sejam CC BY. Licenças verificadas em 01/10/2026 — reconfirmar a cada 90 dias.",
+  "permitidas": [
+    {
+      "fonte": "YouTube — vídeos com licença Creative Commons Atribuição (CC BY)",
+      "como_achar": "Busca do YouTube > Filtros > Recursos > Creative Commons; conferir 'Licença: Creative Commons Atribuição' na descrição do vídeo",
+      "uso": "Recorte e reutilização permitidos, inclusive em canal monetizado",
+      "credito": "Trecho: <nome do canal> — \"<título do vídeo>\" (<data>) · YouTube · CC BY",
+      "observacao": "A licença CC BY é escolhida pelo dono; um vídeo que reenvia material de terceiros não fica liberado só por estar marcado. Rejeitar se o vídeo for claramente reupload de emissora."
+    },
+    {
+      "fonte": "Câmara dos Deputados — sessões plenárias, comissões, Conselho de Ética, audiências (sinal da Casa)",
+      "licenca": "CC BY 4.0",
+      "uso": "Recorte permitido com crédito, inclusive comercial",
+      "credito": "Imagens: TV Câmara / Câmara dos Deputados · CC BY 4.0",
+      "atencao": "Noticiários, reportagens e programas da TV Câmara são CC BY-NC-ND — NÃO usar (não comercial).",
+      "verificado_em": "https://www.camara.leg.br/tv/termos-de-uso/"
+    },
+    {
+      "fonte": "Senado Federal — TV Senado, Agência Senado, Rádio Senado",
+      "licenca": "Reprodução livre com crédito (política de uso própria)",
+      "uso": "Somente trechos de sessões/votações gerados pelo Senado; manter a logo da TV Senado; não alterar o sentido",
+      "credito": "Imagens: TV Senado",
+      "atencao": "A TV Senado avisa que usa material de terceiros cedido só para a emissora — não extrair trechos de reportagens/programas; só sessões e pronunciamentos.",
+      "verificado_em": "https://www12.senado.leg.br/noticias/politica-de-uso"
+    },
+    {
+      "fonte": "Supremo Tribunal Federal — canal do STF no YouTube, Banco de Imagens",
+      "licenca": "Reprodução autorizada (vídeos do canal do STF; fotos com crédito)",
+      "uso": "Trechos de sessões e julgamentos; fotos do Banco de Imagens",
+      "credito": "Vídeo: STF / TV Justiça · Foto: <Fotógrafo>/STF",
+      "verificado_em": "https://portal.stf.jus.br/textos/verTexto.asp?servico=reproducaoConteudo"
+    },
+    {
+      "fonte": "Agência Brasil (EBC) — textos e fotos",
+      "licenca": "Creative Commons com atribuição (reprodução comercial e obras derivadas permitidas)",
+      "credito": "Foto: <Fotógrafo>/Agência Brasil",
+      "verificado_em": "https://wiki.creativecommons.org/wiki/Agencia_Brasil"
+    },
+    {
+      "fonte": "Kremlin.ru — fotos, vídeos e transcrições de Putin",
+      "licenca": "CC BY 4.0",
+      "credito": "Imagens: kremlin.ru · CC BY 4.0",
+      "verificado_em": "http://en.kremlin.ru/about/copyrights"
+    },
+    {
+      "fonte": "Governo dos EUA — Casa Branca, Departamento de Defesa (DVIDS), Departamento de Estado",
+      "licenca": "Domínio público (obras do governo federal dos EUA)",
+      "credito": "Imagens: <órgão> (domínio público)",
+      "atencao": "Conferir se o item não traz aviso de direitos de terceiros."
+    },
+    {
+      "fonte": "Wikimedia Commons — fotos e vídeos",
+      "licenca": "Somente CC0, domínio público, CC BY, CC BY-SA (renderizador já filtra NC/ND)",
+      "credito": "Foto: <autor> · <licença> · Wikimedia Commons"
+    }
+  ],
+  "proibidas": [
+    {"fonte": "Presidência da Ucrânia (president.gov.ua)", "motivo": "CC BY-NC-ND desde out/2022 — não comercial. Exceção: material publicado antes de 04/10/2022 (CC BY 4.0) via Wikimedia Commons."},
+    {"fonte": "Reportagens, noticiários e programas da TV Câmara", "motivo": "CC BY-NC-ND — não comercial"},
+    {"fonte": "Emissoras comerciais e canais do YouTube sem CC BY", "motivo": "Content ID: reivindicação, bloqueio ou strike; citar a fonte não autoriza o uso"},
+    {"fonte": "Fotos de agências privadas (Reuters, AP, AFP, Getty, Folhapress etc.)", "motivo": "Licença paga"}
+  ],
+  "lip_sync": {
+    "_leia": "Âncora com sincronização labial apenas na abertura (≈15–20 s) e, se sobrar crédito, no fechamento. Uma conta gratuita por plataforma (várias contas na mesma plataforma violam os termos). Limites reais anotados aqui após verificação na conta de cada plataforma; sem crédito no dia → âncora em imagem fixa.",
+    "plataformas": []
+  }
+}
