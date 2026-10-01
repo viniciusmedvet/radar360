@@ -1,4 +1,4 @@
-# RADAR 360 — O mundo como ele é
+# RADAR360 — O mundo como ele é
 
 Telejornal diário automatizado: investigação, checagem, roteiros, vídeos e publicação no YouTube, Facebook, Instagram e X.
 

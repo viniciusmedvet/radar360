@@ -1,4 +1,4 @@
-"""Renderiza um roteiro (video-N.md) no padrão telejornal do RADAR 360, sem custo de licença:
+"""Renderiza um roteiro (video-N.md) no padrão telejornal do RADAR360, sem custo de licença:
 
 - Narração: voz neural pt-BR (edge-tts, pt-BR-AntonioNeural), frase a frase, para legenda sincronizada.
 - Fundo: fotos reais de licença livre do Wikimedia Commons (com crédito na tela) casadas com
@@ -16,7 +16,7 @@ import requests
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 W, H = 1920, 1080
-MARCA = "RADAR 360"
+MARCA = "RADAR360"
 SLOGAN = "O MUNDO COMO ELE É"
 AZUL, AZUL2, VERMELHO, BRANCO, CINZA = (6, 28, 64), (12, 60, 130), (214, 31, 38), (255, 255, 255), (205, 212, 224)
 FB = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
@@ -250,7 +250,7 @@ def duracao(arq):
 
 
 def abertura(manchete):
-    return ("Olá! Seja muito bem-vindo ao RADAR 360. "
+    return ("Olá! Seja muito bem-vindo ao RADAR360. "
             "Obrigado, de coração, pela sua presença e pela sua atenção — é por você que a gente trabalha todos os dias "
             "para trazer a informação checada, com fonte, do jeito que ela é. "
             "Agradeço também a cada pessoa que se inscreve, comenta e compartilha: vocês fazem este jornal. "

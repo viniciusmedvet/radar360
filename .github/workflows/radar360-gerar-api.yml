@@ -1,4 +1,4 @@
-name: RADAR 360 — gerar roteiros via API (manual, opcional e pago)
+name: RADAR360 — gerar roteiros via API (manual, opcional e pago)
 
 on:
   workflow_dispatch:

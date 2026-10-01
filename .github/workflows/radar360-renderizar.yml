@@ -1,4 +1,4 @@
-name: RADAR 360 — renderizar vídeos
+name: RADAR360 — renderizar vídeos
 
 # Monta os vídeos do dia (voz neural, fotos Wikimedia Commons, âncora, legendas) e publica os
 # arquivos como Release do GitHub, de onde a etapa de publicação sobe para o YouTube.
@@ -58,5 +58,5 @@ jobs:
           TAG="radar360-${{ steps.dia.outputs.data }}"
           gh release delete "$TAG" -y --cleanup-tag 2>/dev/null || true
           gh release create "$TAG" render/video-*.mp4 render/video-*.jpg \
-            --target "${{ github.sha }}" --title "RADAR 360 — ${{ steps.dia.outputs.data }}" \
+            --target "${{ github.sha }}" --title "RADAR360 — ${{ steps.dia.outputs.data }}" \
             --notes "Vídeos renderizados automaticamente. Publicação no YouTube pela rotina do Claude."
