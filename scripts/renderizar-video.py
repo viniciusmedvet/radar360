@@ -1,4 +1,4 @@
-"""Renderiza um roteiro (video-N.md) no padrão telejornal do RADAR 360, sem custo de licença.
+"""Renderiza um roteiro (video-N.md) no padrão telejornal do RADAR 365, sem custo de licença.
 
 Saídas, cada uma no limite de cada plataforma:
 - video-N.mp4            1920x1080, duração livre: YouTube e Facebook.
@@ -25,15 +25,15 @@ from PIL import Image, ImageDraw, ImageFont
 
 LAYOUTS = {"h": (1920, 1080), "v": (1080, 1920)}
 VERTICAL_MAX = 58.0  # segundos: cabe em Reels, TikTok e Shorts
-MARCA = "RADAR 360"
+MARCA = "RADAR 365"
 SLOGAN = "O MUNDO COMO ELE É"
-CANAL = "RADAR 360 | Ciência e Mundo"
+CANAL = "RADAR 365 | Ciência e Mundo"
 AZUL, AZUL2, VERMELHO, BRANCO, CINZA = (6, 28, 64), (12, 60, 130), (214, 31, 38), (255, 255, 255), (205, 212, 224)
 AMARELO = (255, 236, 120)
 FB = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 FR = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 VOZ, VELOCIDADE, TOM = "pt-BR-AntonioNeural", "-6%", "-2Hz"
-UA = {"User-Agent": "Radar360Bot/1.0 (jornalismo; viniciusmedvet@gmail.com)"}
+UA = {"User-Agent": "Radar365Bot/1.0 (jornalismo; viniciusmedvet@gmail.com)"}
 FPS = 25
 CLIPE_MAX = 12.0  # segundos máximos no mesmo clipe antes de trocar
 
@@ -479,7 +479,7 @@ def duracao(arq):
 
 
 def abertura(manchete):
-    return ("Olá! Seja muito bem-vindo ao RADAR 360. "
+    return ("Olá! Seja muito bem-vindo ao RADAR 365. "
             "Obrigado, de coração, pela sua presença e pela sua atenção — é por você que a gente trabalha todos os dias "
             "para trazer a informação checada, com fonte, do jeito que ela é. "
             "Agradeço também a cada pessoa que se inscreve, comenta e compartilha: vocês fazem este jornal. "

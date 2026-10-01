@@ -63,25 +63,25 @@
       "slot": 1,
       "horario_brt": "10:00",
       "eixo": "geopolitica",
-      "tema": "Guerra na Ucrânia, Rússia/Putin, EUA/Trump, Europa — e o impacto direto no Brasil (fertilizantes, commodities, câmbio)"
+      "tema": "Geopolítica (Ucrânia, Rússia, EUA, Europa) e como chega à saúde e às ciências biológicas no Brasil: fertilizantes e produção animal, preço de insumos, medicamentos e vacinas importados, cadeias de suprimento hospitalar e veterinário, sanções, pesquisa e cooperação científica, saúde global."
     },
     {
       "slot": 2,
       "horario_brt": "12:00",
       "eixo": "geopolitica",
-      "tema": "Oriente Médio: Irã x Estados Unidos, Israel, Estreito de Ormuz, petróleo — e o impacto no combustível e na inflação do brasileiro"
+      "tema": "Oriente Médio (Irã, Israel, Ormuz, petróleo) e o efeito na saúde: combustível e frete de insumos, plásticos e materiais hospitalares, preço de ração e de alimentos, crises humanitárias e sanitárias, profissionais de saúde em zonas de conflito."
     },
     {
       "slot": 3,
       "horario_brt": "18:00",
       "eixo": "judiciario",
-      "tema": "Bastidores do STF e dos Três Poderes: decisões, inquéritos e crises envolvendo ministros (Moraes, Gilmar Mendes, Toffoli, Mendonça, Fux), Congresso e Executivo; esquemas de corrupção no Brasil e no mundo"
+      "tema": "STF, Congresso e Executivo: decisões que mexem com as profissões da saúde e das ciências biológicas (exercício profissional, conselhos, piso da enfermagem, SUS, planos de saúde, ANVISA, MAPA, regulação de medicamentos e de produtos veterinários, meio ambiente, pesquisa) e os bastidores do poder."
     },
     {
       "slot": 4,
       "horario_brt": "21:00",
       "eixo": "negocios",
-      "tema": "Dinheiro e poder: mercado (Ibovespa, dólar, Selic, Focus), política econômica e estratégias educativas de construção de patrimônio"
+      "tema": "Dinheiro e poder para o profissional da saúde: Selic, dólar, inflação e mercado (pet, saúde, agro, farmacêutico); custos e preços de clínica, hospital e laboratório; carreira, empreendedorismo, PJ x CLT e tributação; educação financeira e patrimônio (educativo, sem recomendação individual)."
     },
     {
       "slot": 5,
@@ -109,7 +109,7 @@
       {
         "minuto": -10,
         "plataforma": "youtube",
-        "canal": "Radar-360 | CURIOSIDADE ILIMITADA (@curiosidadeiltda)",
+        "canal": "RADAR 365 | Ciência e Mundo (@curiosidadeiltda; nome antigo: Radar-360 | CURIOSIDADE ILIMITADA)",
         "channelId": "UCuUUqOrl94UCYcvjObiaEWA",
         "conta": "youtube_singey-cheap",
         "exclusivo": true,
@@ -141,29 +141,35 @@
         "minuto": 15,
         "plataforma": "tiktok",
         "usuario": "",
-        "conta": "radar360-tiktok",
+        "conta": "radar365-tiktok",
         "exclusivo": true,
         "formato": "vídeo + texto do roteiro + chamada para o YouTube; rótulo de conteúdo gerado por IA",
-        "conexao": "pendente: criar a conta TikTok do RADAR 360, conectar no Composio (alias radar360-tiktok) e preencher 'usuario'"
+        "conexao": "pendente: criar a conta TikTok do RADAR 365, conectar no Composio (alias radar365-tiktok) e preencher 'usuario'"
       }
     ],
     "fechamento_brt": "21:30"
   },
   "publico_alvo": [
-    "médicos veterinários",
-    "médicos veterinários de pequenos animais (clínica médica, nutrição e nutrologia de cães e gatos), estudantes de veterinária e tutores interessados",
+    "médicos veterinários (pequenos animais — clínica médica, nutrição e nutrologia de cães e gatos —, grandes animais, saúde pública, indústria)",
     "médicos",
-    "enfermeiros",
-    "biólogos e profissionais das ciências biológicas",
-    "estudantes da área da saúde",
-    "curiosos de saúde, medicina e tecnologia",
-    "público interessado em geopolítica, política e dinheiro"
+    "enfermeiros e técnicos de enfermagem",
+    "biólogos",
+    "biomédicos",
+    "farmacêuticos",
+    "nutricionistas",
+    "zootecnistas",
+    "fisioterapeutas",
+    "cirurgiões-dentistas",
+    "profissionais de laboratório e pesquisadores",
+    "estudantes da saúde e das ciências biológicas",
+    "tutores e curiosos de saúde, medicina e tecnologia"
   ],
   "identidade_canal": {
-    "nome": "RADAR 360 | Ciência e Mundo",
+    "nome": "RADAR 365 | Ciência e Mundo",
     "slogan": "O mundo como ele é — com fonte.",
     "banner": "assets/canal/banner-youtube.png",
     "perfil": "assets/canal/perfil.png",
     "gerador": "scripts/gerar-identidade.py"
-  }
+  },
+  "missao": "Informar profissionais da saúde e das ciências biológicas sobre tudo o que acontece no mundo e mostrar, com fonte, como cada fato chega à rotina de cada profissão."
 }

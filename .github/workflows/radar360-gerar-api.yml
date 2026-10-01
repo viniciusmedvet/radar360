@@ -1,4 +1,4 @@
-name: RADAR 360 — gerar roteiros via API (manual, opcional e pago)
+name: RADAR 365 — gerar roteiros via API (manual, opcional e pago)
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: radar360-gerar-api
+  group: radar365-gerar-api
   cancel-in-progress: false
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Versionar a produção do dia
         run: |
-          git config user.name "radar360-bot"
+          git config user.name "radar365-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add saida
           git commit -m "Canal de notícias: produção de $(TZ=America/Sao_Paulo date +%F)" || echo "Nada novo para versionar"

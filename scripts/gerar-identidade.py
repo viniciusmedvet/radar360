@@ -59,9 +59,9 @@ def banner():
     d = ImageDraw.Draw(img)
     # área segura do YouTube (aparece em todos os aparelhos): 1546x423 centralizada
     x0, y0 = (W - 1546) // 2, (H - 423) // 2
-    centro(d, y0 + 18, "RADAR 360", f(FB, 150), W, BRANCO)
+    centro(d, y0 + 18, "RADAR 365", f(FB, 150), W, BRANCO)
     d.rectangle([W // 2 - 300, y0 + 192, W // 2 + 300, y0 + 200], fill=VERMELHO)
-    centro(d, y0 + 222, "CIÊNCIA · SAÚDE · GEOPOLÍTICA · DINHEIRO", f(FB, 50), W, BRANCO)
+    centro(d, y0 + 222, "O MUNDO PELA LENTE DA SAÚDE E DA CIÊNCIA", f(FB, 50), W, BRANCO)
     centro(d, y0 + 300, "O mundo como ele é — com fonte.", f(FR, 46), W, CINZA)
     centro(d, y0 + 362, "Vídeos novos todos os dias", f(FB, 34), W, VERDE)
     img.save(SAIDA / "banner-youtube.png", optimize=True)
@@ -75,7 +75,7 @@ def perfil():
     d.ellipse([S // 2 - 250, S // 2 - 190, S // 2 + 250, S // 2 + 190], fill=AZUL)
     centro(d, S // 2 - 128, "RADAR", f(FB, 96), S, BRANCO)
     d.rectangle([S // 2 - 150, S // 2 - 14, S // 2 + 150, S // 2 - 6], fill=VERMELHO)
-    centro(d, S // 2 + 2, "360", f(FB, 130), S, VERDE)
+    centro(d, S // 2 + 2, "365", f(FB, 130), S, VERDE)
     img.save(SAIDA / "perfil.png", optimize=True)
 
 
