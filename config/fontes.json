@@ -87,7 +87,16 @@
       "slot": 5,
       "horario_brt": "15:00",
       "eixo": "ciencia-saude",
-      "tema": "Saúde Única (One Health): medicina humana e veterinária, enfermagem, biologia, biotecnologia e IA em saúde — estudos revisados por pares, alertas sanitários (OMS, OMSA/WOAH, Ministério da Saúde, MAPA, ANVISA), zoonoses, resistência antimicrobiana, vacinas, novas terapias e diagnósticos. Público: médicos veterinários, médicos, enfermeiros, biólogos e curiosos de saúde e tecnologia."
+      "tema": "Ciência e saúde. Segunda, quarta, sexta e sábado: CLÍNICA MÉDICA, NUTRIÇÃO E NUTROLOGIA DE CÃES E GATOS (doenças crônicas — renal, endócrina, gastrointestinal, cardíaca, obesidade —, dietas terapêuticas, nutrição por fase de vida, consensos e diretrizes, novos estudos). Terça, quinta e domingo: Saúde Única (One Health) — medicina humana e veterinária, enfermagem, biologia, biotecnologia e IA em saúde, zoonoses, resistência antimicrobiana, vacinas e alertas sanitários (OMS, OMSA/WOAH, Ministério da Saúde, MAPA, ANVISA).",
+      "rodizio": {
+        "seg": "pets",
+        "ter": "saude-unica",
+        "qua": "pets",
+        "qui": "saude-unica",
+        "sex": "pets",
+        "sab": "pets",
+        "dom": "saude-unica"
+      }
     }
   ],
   "_grade_nota": "A produção começa às 06:30 (rotina diária do Claude). O 1º vídeo saiu das 07:00 para as 10:00 porque pesquisa + checagem + renderização não cabem em 30 min. Horários de trabalho, não comprovados por dados do canal: reavaliar após 14 dias com YouTube Studio > Análise > 'Quando seus espectadores estão no YouTube'.",
@@ -142,6 +151,7 @@
   },
   "publico_alvo": [
     "médicos veterinários",
+    "médicos veterinários de pequenos animais (clínica médica, nutrição e nutrologia de cães e gatos), estudantes de veterinária e tutores interessados",
     "médicos",
     "enfermeiros",
     "biólogos e profissionais das ciências biológicas",

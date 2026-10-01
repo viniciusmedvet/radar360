@@ -57,6 +57,25 @@ Escolha sempre as notícias de maior impacto das últimas 24 horas.
   antimicrobiana, vacinas, novas terapias e diagnósticos, biotecnologia, IA aplicada à saúde,
   bem-estar animal, carreira e mercado das profissões da saúde.
 
+### 2.0.1 Clínica médica e nutrição de cães e gatos
+
+- Público: médicos veterinários de pequenos animais, nutrólogos veterinários, estudantes e
+  tutores. Use a terminologia técnica correta (ex.: estadiamento IRIS da doença renal crônica,
+  escore de condição corporal 1–9, escore de massa muscular, necessidade energética de repouso)
+  e explique o termo na primeira menção.
+- Referências preferenciais: artigos revisados por pares (JVIM, JFMS, JAVMA, Journal of Animal
+  Physiology and Animal Nutrition, Veterinary Clinics), consensos ACVIM, diretrizes WSAVA (Global
+  Nutrition Guidelines), FEDIAF, AAFCO, NRC (2006) e a IRIS.
+- Diferencie sempre cão de gato (o gato é carnívoro estrito: taurina, arginina, vitamina A
+  pré-formada, ácido araquidônico).
+- **Sem marcas:** nunca cite, compare ou recomende marcas, linhas ou produtos comerciais de
+  alimento, suplemento ou medicamento. Fale de nutrientes, categorias (dieta terapêutica renal,
+  hipoalergênica com proteína hidrolisada etc.) e evidência.
+- Sem dose, sem quantidade diária, sem protocolo individual: "o plano alimentar e o tratamento
+  são definidos pelo médico veterinário após a avaliação do paciente".
+- Dietas caseiras, cruas (BARF) e vegetarianas: apresente evidência de benefícios e riscos
+  (deficiências, contaminação bacteriana), sem militância.
+
 ## 2.1 Imagens e trechos de vídeo (termos do YouTube)
 
 - Use SOMENTE as fontes de `config/fontes-midia.json`, com licença que permita uso comercial

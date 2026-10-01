@@ -11,9 +11,10 @@ Este sistema faz a pesquisa, a checagem e os roteiros do canal todos os dias, e 
 publicação no YouTube:
 
 - **5 vídeos por dia** (10:00, 12:00, 15:00, 18:00 e 21:00, horário de Brasília): geopolítica
-  (Ucrânia, Rússia, EUA), Oriente Médio (Irã, Ormuz, petróleo), **ciência e saúde (Saúde Única)**,
+  (Ucrânia, Rússia, EUA), Oriente Médio (Irã, Ormuz, petróleo), **ciência e saúde** (seg/qua/sex/sáb: clínica médica e nutrição de cães e gatos;
+  ter/qui/dom: Saúde Única),
   bastidores do STF e dos Três Poderes, e dinheiro/negócios.
-- **Público:** médicos veterinários, médicos, enfermeiros, biólogos, estudantes da saúde e curiosos
+- **Público:** médicos veterinários (com foco em clínica médica, nutrição e nutrologia de cães e gatos), médicos, enfermeiros, biólogos, estudantes da saúde e curiosos
   de saúde, medicina e tecnologia, além de quem acompanha geopolítica, poder e dinheiro.
 - **5 textos por dia** para Instagram, TikTok e Facebook, um para cada vídeo.
 - **Verificação obrigatória:** cada fato precisa de 2 fontes independentes. O que não é
