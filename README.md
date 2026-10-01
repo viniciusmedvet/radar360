@@ -10,13 +10,21 @@ Telejornal diário automatizado: investigação, checagem, roteiros, vídeos e p
 Este sistema faz a pesquisa, a checagem e os roteiros do canal todos os dias, e depois agenda a
 publicação no YouTube:
 
-- **4 vídeos por dia** (10:00, 12:00, 18:00 e 21:00, horário de Brasília): geopolítica
-  (Ucrânia, Rússia, EUA), Oriente Médio (Irã, Ormuz, petróleo), bastidores do STF e dos Três
-  Poderes, e dinheiro/negócios.
-- **4 textos por dia** para Instagram, TikTok e Facebook, um para cada vídeo.
+- **5 vídeos por dia** (10:00, 12:00, 15:00, 18:00 e 21:00, horário de Brasília): geopolítica
+  (Ucrânia, Rússia, EUA), Oriente Médio (Irã, Ormuz, petróleo), **ciência e saúde (Saúde Única)**,
+  bastidores do STF e dos Três Poderes, e dinheiro/negócios.
+- **Público:** médicos veterinários, médicos, enfermeiros, biólogos, estudantes da saúde e curiosos
+  de saúde, medicina e tecnologia, além de quem acompanha geopolítica, poder e dinheiro.
+- **5 textos por dia** para Instagram, TikTok e Facebook, um para cada vídeo.
 - **Verificação obrigatória:** cada fato precisa de 2 fontes independentes. O que não é
   confirmado vai para a seção "Não confirmado — não usar". Roteiro que não passa no controle de
   qualidade é salvo como `REPROVADO-video-N.md` e fica fora da publicação.
+
+## Identidade do canal
+
+- Nome: **RADAR 360 | Ciência e Mundo** · slogan "O mundo como ele é — com fonte."
+- Banner (2560×1440) e foto de perfil (800×800) em `assets/canal/`, gerados por
+  `python3 scripts/gerar-identidade.py` (cores e fontes do renderizador).
 
 ## Fluxo
 
@@ -40,6 +48,7 @@ Cada vídeo segue a mesma ordem: YouTube primeiro, porque as redes levam o link 
 |---|---|---|---|---|---|
 | 1 · geopolítica | 09:50 | 10:00 | 10:05 | 10:10 | 10:15 |
 | 2 · Oriente Médio | 11:50 | 12:00 | 12:05 | 12:10 | 12:15 |
+| 5 · ciência e saúde | 14:50 | 15:00 | 15:05 | 15:10 | 15:15 |
 | 3 · STF e Três Poderes | 17:50 | 18:00 | 18:05 | 18:10 | 18:15 |
 | 4 · dinheiro e poder | 20:50 | 21:00 | 21:05 | 21:10 | 21:15 |
 

@@ -82,6 +82,12 @@
       "horario_brt": "21:00",
       "eixo": "negocios",
       "tema": "Dinheiro e poder: mercado (Ibovespa, dólar, Selic, Focus), política econômica e estratégias educativas de construção de patrimônio"
+    },
+    {
+      "slot": 5,
+      "horario_brt": "15:00",
+      "eixo": "ciencia-saude",
+      "tema": "Saúde Única (One Health): medicina humana e veterinária, enfermagem, biologia, biotecnologia e IA em saúde — estudos revisados por pares, alertas sanitários (OMS, OMSA/WOAH, Ministério da Saúde, MAPA, ANVISA), zoonoses, resistência antimicrobiana, vacinas, novas terapias e diagnósticos. Público: médicos veterinários, médicos, enfermeiros, biólogos e curiosos de saúde e tecnologia."
     }
   ],
   "_grade_nota": "A produção começa às 06:30 (rotina diária do Claude). O 1º vídeo saiu das 07:00 para as 10:00 porque pesquisa + checagem + renderização não cabem em 30 min. Horários de trabalho, não comprovados por dados do canal: reavaliar após 14 dias com YouTube Studio > Análise > 'Quando seus espectadores estão no YouTube'.",
@@ -91,12 +97,63 @@
     "prazo_roteiros_brt": "08:15",
     "prazo_renderizacao_brt": "09:30",
     "etapas": [
-      { "minuto": -10, "plataforma": "youtube", "canal": "Radar-360 | CURIOSIDADE ILIMITADA (@curiosidadeiltda)", "channelId": "UCuUUqOrl94UCYcvjObiaEWA", "conta": "youtube_singey-cheap", "exclusivo": true, "formato": "vídeo completo, público, categoria 25, miniatura", "conexao": "pendente: autorizar o canal @curiosidadeiltda no Composio" },
-      { "minuto": 0, "plataforma": "facebook", "conta": "facebook_chick-robin", "formato": "vídeo na página + 'Texto para redes sociais' + link do YouTube", "conexao": "ativa" },
-      { "minuto": 5, "plataforma": "instagram", "conta": "instagram_barman-lagend", "formato": "Reels + 'Texto para redes sociais' + link do YouTube", "conexao": "ativa" },
-      { "minuto": 10, "plataforma": "x", "conta": "", "formato": "texto de até 280 caracteres + link do YouTube", "conexao": "pendente: conectar Twitter no Composio" },
-      { "minuto": 15, "plataforma": "tiktok", "usuario": "", "conta": "radar360-tiktok", "exclusivo": true, "formato": "vídeo + texto do roteiro + chamada para o YouTube; rótulo de conteúdo gerado por IA", "conexao": "pendente: criar a conta TikTok do RADAR 360, conectar no Composio (alias radar360-tiktok) e preencher 'usuario'" }
+      {
+        "minuto": -10,
+        "plataforma": "youtube",
+        "canal": "Radar-360 | CURIOSIDADE ILIMITADA (@curiosidadeiltda)",
+        "channelId": "UCuUUqOrl94UCYcvjObiaEWA",
+        "conta": "youtube_singey-cheap",
+        "exclusivo": true,
+        "formato": "vídeo completo, público, categoria 25, miniatura",
+        "conexao": "pendente: autorizar o canal @curiosidadeiltda no Composio"
+      },
+      {
+        "minuto": 0,
+        "plataforma": "facebook",
+        "conta": "facebook_chick-robin",
+        "formato": "vídeo na página + 'Texto para redes sociais' + link do YouTube",
+        "conexao": "ativa"
+      },
+      {
+        "minuto": 5,
+        "plataforma": "instagram",
+        "conta": "instagram_barman-lagend",
+        "formato": "Reels + 'Texto para redes sociais' + link do YouTube",
+        "conexao": "ativa"
+      },
+      {
+        "minuto": 10,
+        "plataforma": "x",
+        "conta": "",
+        "formato": "texto de até 280 caracteres + link do YouTube",
+        "conexao": "pendente: conectar Twitter no Composio"
+      },
+      {
+        "minuto": 15,
+        "plataforma": "tiktok",
+        "usuario": "",
+        "conta": "radar360-tiktok",
+        "exclusivo": true,
+        "formato": "vídeo + texto do roteiro + chamada para o YouTube; rótulo de conteúdo gerado por IA",
+        "conexao": "pendente: criar a conta TikTok do RADAR 360, conectar no Composio (alias radar360-tiktok) e preencher 'usuario'"
+      }
     ],
     "fechamento_brt": "21:30"
+  },
+  "publico_alvo": [
+    "médicos veterinários",
+    "médicos",
+    "enfermeiros",
+    "biólogos e profissionais das ciências biológicas",
+    "estudantes da área da saúde",
+    "curiosos de saúde, medicina e tecnologia",
+    "público interessado em geopolítica, política e dinheiro"
+  ],
+  "identidade_canal": {
+    "nome": "RADAR 360 | Ciência e Mundo",
+    "slogan": "O mundo como ele é — com fonte.",
+    "banner": "assets/canal/banner-youtube.png",
+    "perfil": "assets/canal/perfil.png",
+    "gerador": "scripts/gerar-identidade.py"
   }
 }
