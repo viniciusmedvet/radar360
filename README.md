@@ -10,7 +10,7 @@ Telejornal diário automatizado: investigação, checagem, roteiros, vídeos e p
 Este sistema faz a pesquisa, a checagem e os roteiros do canal todos os dias, e depois agenda a
 publicação no YouTube:
 
-- **4 vídeos por dia** (07:00, 12:00, 18:00 e 21:00, horário de Brasília): geopolítica
+- **4 vídeos por dia** (10:00, 12:00, 18:00 e 21:00, horário de Brasília): geopolítica
   (Ucrânia, Rússia, EUA), Oriente Médio (Irã, Ormuz, petróleo), bastidores do STF e dos Três
   Poderes, e dinheiro/negócios.
 - **4 textos por dia** para Instagram, TikTok e Facebook, um para cada vídeo.
@@ -20,13 +20,30 @@ publicação no YouTube:
 
 ## Fluxo
 
+A rotina diária do Claude ("RADAR 360 — produção e publicação diária") começa às **06:30**:
+
 ```
-05:40  GitHub Actions  →  coletar-fontes.mjs  →  vídeos recentes dos canais de referência,
-                                                  ordenados por views/hora (o que o público está vendo agora)
-                       →  gerar-conteudo.mjs  →  Claude pesquisa, checa e escreve 4 roteiros + 4 textos
-                       →  commit em saida/AAAA-MM-DD/
-Você   →  revisa → grava ou renderiza os .mp4 → npm run publicar  →  YouTube (privado, estreia agendada)
+06:30  Rotina do Claude  →  pesquisa, checagem, 4 roteiros + publicacao.json
+08:15  (prazo)           →  commit em saida/AAAA-MM-DD/ na main
+                         →  GitHub Actions "renderizar vídeos" → Release radar360-AAAA-MM-DD
+09:30  (prazo)           →  vídeos .mp4/.jpg prontos
 ```
+
+### Agenda diária de publicação (horário de Brasília)
+
+Cada vídeo segue a mesma ordem: YouTube primeiro, porque as redes levam o link dele.
+
+| Vídeo | YouTube | Facebook | Instagram (Reels) | X | TikTok |
+|---|---|---|---|---|---|
+| 1 · geopolítica | 09:50 | 10:00 | 10:05 | 10:10 | 10:15 |
+| 2 · Oriente Médio | 11:50 | 12:00 | 12:05 | 12:10 | 12:15 |
+| 3 · STF e Três Poderes | 17:50 | 18:00 | 18:05 | 18:10 | 18:15 |
+| 4 · dinheiro e poder | 20:50 | 21:00 | 21:05 | 21:10 | 21:15 |
+
+21:30: relatório do dia (`saida/AAAA-MM-DD/relatorio.md`) e resumo com os links.
+
+X e TikTok entram quando forem conectados no Composio; até lá a rotina pula e registra no relatório.
+A ordem e os minutos ficam em `agenda_publicacao`, em `config/fontes.json`.
 
 | Pasta/arquivo | Conteúdo |
 |---|---|

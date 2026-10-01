@@ -19,7 +19,7 @@ export function agoraBrasilia() {
   }).format(new Date());
 }
 
-// Pasta de saída do dia de PUBLICAÇÃO (padrão: hoje em Brasília; a produção roda às 05:40).
+// Pasta de saída do dia de PUBLICAÇÃO (padrão: hoje em Brasília; a produção roda às 06:30).
 export async function pastaDoDia() {
   // `||`: o workflow agendado define DATA_PUBLICACAO como string vazia.
   const data = process.env.DATA_PUBLICACAO || dataBrasilia(Number(process.env.DESLOCAMENTO_DIAS ?? 0));
