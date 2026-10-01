@@ -86,12 +86,12 @@
   ],
   "_grade_nota": "A produção começa às 06:30 (rotina diária do Claude). O 1º vídeo saiu das 07:00 para as 10:00 porque pesquisa + checagem + renderização não cabem em 30 min. Horários de trabalho, não comprovados por dados do canal: reavaliar após 14 dias com YouTube Studio > Análise > 'Quando seus espectadores estão no YouTube'.",
   "agenda_publicacao": {
-    "_leia": "Ordem de publicação de CADA vídeo da grade_diaria. Minutos relativos ao horario_brt do slot. O YouTube vem primeiro porque as redes levam o link dele.",
+    "_leia": "YouTube: publicar SOMENTE no canal @curiosidadeiltda (channelId UCuUUqOrl94UCYcvjObiaEWA), nunca no canal pessoal @viniciusmedvet. Ordem de publicação de CADA vídeo da grade_diaria. Minutos relativos ao horario_brt do slot. O YouTube vem primeiro porque as redes levam o link dele.",
     "inicio_producao_brt": "06:30",
     "prazo_roteiros_brt": "08:15",
     "prazo_renderizacao_brt": "09:30",
     "etapas": [
-      { "minuto": -10, "plataforma": "youtube", "conta": "youtube_triad-ballan", "formato": "vídeo completo, público, categoria 25, miniatura", "conexao": "ativa" },
+      { "minuto": -10, "plataforma": "youtube", "canal": "Radar-360 | CURIOSIDADE ILIMITADA (@curiosidadeiltda)", "channelId": "UCuUUqOrl94UCYcvjObiaEWA", "conta": "youtube_singey-cheap", "exclusivo": true, "formato": "vídeo completo, público, categoria 25, miniatura", "conexao": "pendente: autorizar o canal @curiosidadeiltda no Composio" },
       { "minuto": 0, "plataforma": "facebook", "conta": "facebook_chick-robin", "formato": "vídeo na página + 'Texto para redes sociais' + link do YouTube", "conexao": "ativa" },
       { "minuto": 5, "plataforma": "instagram", "conta": "instagram_barman-lagend", "formato": "Reels + 'Texto para redes sociais' + link do YouTube", "conexao": "ativa" },
       { "minuto": 10, "plataforma": "x", "conta": "", "formato": "texto de até 280 caracteres + link do YouTube", "conexao": "pendente: conectar Twitter no Composio" },

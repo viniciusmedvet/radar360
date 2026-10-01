@@ -31,6 +31,9 @@ A rotina diária do Claude ("RADAR 360 — produção e publicação diária") c
 
 ### Agenda diária de publicação (horário de Brasília)
 
+**Canal do YouTube (exclusivo):** [Radar-360 | CURIOSIDADE ILIMITADA](https://www.youtube.com/@curiosidadeiltda)
+(`UCuUUqOrl94UCYcvjObiaEWA`). Antes de cada envio, a rotina confere esse ID e, se não bater, não publica.
+
 Cada vídeo segue a mesma ordem: YouTube primeiro, porque as redes levam o link dele.
 
 | Vídeo | YouTube | Facebook | Instagram (Reels) | X | TikTok |
