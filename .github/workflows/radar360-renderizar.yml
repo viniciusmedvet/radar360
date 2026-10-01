@@ -5,7 +5,7 @@ name: RADAR 360 — renderizar vídeos
 # como Release do GitHub, de onde a rotina do Claude envia para as plataformas.
 on:
   push:
-    branches: [main]
+    branches: [main, "ccr-**"]  # fora da main: só artefatos de teste, sem Release
     paths:
       - "saida/*/video-*.md"
       - ".github/workflows/radar360-renderizar.yml"
@@ -83,7 +83,7 @@ jobs:
 
   publicar:
     needs: [preparar, renderizar]
-    if: ${{ always() && needs.preparar.result == 'success' && inputs.publicar_release != 'false' }}
+    if: ${{ always() && needs.preparar.result == 'success' && github.ref == 'refs/heads/main' && inputs.publicar_release != 'false' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
