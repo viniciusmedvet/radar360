@@ -394,16 +394,24 @@ def camada(layout, credito, manchete, assunto_txt, legenda, destino):
     cam.save(destino)
 
 
-def cartao_final(destino):
-    """Último quadro do corte vertical: chamada para o vídeo completo."""
-    W, H = LAYOUTS["v"]
+def cartao_final(destino, layout="v"):
+    """Último quadro: chamada para se inscrever (16:9) ou para o vídeo completo (vertical)."""
+    W, H = LAYOUTS[layout]
     img = Image.new("RGB", (W, H), AZUL)
     d = ImageDraw.Draw(img)
-    selo(d, (W - 420) // 2, 520, 1.2)
-    for i, (t, tam, cor) in enumerate([("Vídeo completo", 74, BRANCO), ("no YouTube", 74, BRANCO),
-                                       (CANAL, 44, AMARELO), ("Siga para mais", 44, CINZA)]):
+    if layout == "v":
+        selo(d, (W - 420) // 2, 520, 1.2)
+        linhas = [("Vídeo completo", 74, BRANCO), ("no YouTube", 74, BRANCO), (CANAL, 44, AMARELO),
+                  ("Inscreva-se e ative o sininho", 44, CINZA)]
+        y0, passo = 820, 110
+    else:
+        selo(d, (W - 470) // 2, 200, 1.35)
+        linhas = [("Inscreva-se no RADAR365", 86, BRANCO), ("e ative o sininho", 60, AMARELO),
+                  ("Todo dia: o que o mundo muda na sua rotina na saúde", 40, CINZA)]
+        y0, passo = 470, 120
+    for i, (t, tam, cor) in enumerate(linhas):
         fo = f(FB, tam)
-        d.text(((W - d.textlength(t, font=fo)) / 2, 820 + i * 110), t, font=fo, fill=cor)
+        d.text(((W - d.textlength(t, font=fo)) / 2, y0 + i * passo), t, font=fo, fill=cor)
     img.save(destino, quality=92)
 
 
@@ -551,8 +559,13 @@ def main():
         marcos.append((t, "Abertura" if bloco == "ABERTURA" else assunto(bloco).lower()))
         t += seg
 
+    # tela final de 6 s com chamada para inscrição (área usada pela tela final do YouTube)
+    fim_h_png, fim_h_mp4, vazio_h = tmp / "h_fim.png", tmp / "h_fim.mp4", tmp / "h_vazio.png"
+    cartao_final(fim_h_png, "h")
+    Image.new("RGBA", LAYOUTS["h"], (0, 0, 0, 0)).save(vazio_h)
+    montar({"tipo": "ancora", "arq": fim_h_png}, vazio_h, None, 6.0, fim_h_mp4, "h", 0)
     final = out / f"{nome}.mp4"
-    concatenar(partes, final)
+    concatenar(partes + [fim_h_mp4], final)
     (out / f"{nome}-capitulos.txt").write_text(capitulos(marcos, t), encoding="utf-8")
 
     # corte vertical: do gancho em diante, até ~58 s, com chamada final para o vídeo completo

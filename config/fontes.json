@@ -171,5 +171,46 @@
     "perfil": "assets/canal/perfil.png",
     "gerador": "scripts/gerar-identidade.py"
   },
-  "missao": "Informar profissionais da saúde e das ciências biológicas sobre tudo o que acontece no mundo e mostrar, com fonte, como cada fato chega à rotina de cada profissão."
+  "missao": "Informar profissionais da saúde e das ciências biológicas sobre tudo o que acontece no mundo e mostrar, com fonte, como cada fato chega à rotina de cada profissão.",
+  "playlists": {
+    "_leia": "Playlists públicas do canal @curiosidadeiltda (criadas em 01/10/2026). Todo vídeo novo entra na playlist do seu eixo.",
+    "pets": {
+      "id": "PLbmUm_scvw2U",
+      "titulo": "RADAR365 | Cães e Gatos: Clínica e Nutrição",
+      "slots": [
+        5
+      ],
+      "dias": "seg, qua, sex, sáb"
+    },
+    "saude-unica": {
+      "id": "PLV0YVt-L3Q_0",
+      "titulo": "RADAR365 | Saúde Única e Ciência",
+      "slots": [
+        5
+      ],
+      "dias": "ter, qui, dom"
+    },
+    "geopolitica": {
+      "id": "PLMbT4lsUMhy4",
+      "titulo": "RADAR365 | Geopolítica e Saúde",
+      "slots": [
+        1,
+        2
+      ]
+    },
+    "poder": {
+      "id": "PLZm7TfyunpM4",
+      "titulo": "RADAR365 | Poder: STF, Congresso e Saúde",
+      "slots": [
+        3
+      ]
+    },
+    "dinheiro": {
+      "id": "PLJpEJy0cHed4",
+      "titulo": "RADAR365 | Dinheiro e Carreira na Saúde",
+      "slots": [
+        4
+      ]
+    }
+  }
 }
