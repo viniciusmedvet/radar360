@@ -21,9 +21,9 @@ canal @curiosidadeiltda e acompanhar todos os números para fazê-lo crescer, se
 - **Domingo (revisão semanal):** comparar com 7 dias antes; ranquear os vídeos por visualizações
   por hora desde a publicação e por curtidas/visualização; registrar abaixo, em "Aprendizados",
   o que funcionou (tema, título, miniatura, horário, profissão citada) e o que muda na semana.
-- Dados que a API pública não dá (retenção, CTR da miniatura, origem do tráfego): exigem YouTube
-  Analytics (vidIQ, pago, aguardando aprovação) ou leitura manual do YouTube Studio pelo Vinícius.
-  Nunca estimar esses números.
+- Dados que a API pública não dá (retenção, CTR da miniatura, origem do tráfego): só pela leitura
+  manual do YouTube Studio pelo Vinícius. O vidIQ (pago) foi RECUSADO por ele em 02/10/2026: não
+  conectar nem sugerir de novo. Nunca estimar esses números.
 
 ## Alavancas aplicadas a cada vídeo
 
@@ -54,5 +54,7 @@ canal @curiosidadeiltda e acompanhar todos os números para fazê-lo crescer, se
 
 ## Aprendizados (atualizado todo domingo)
 
+- 01/10/2026: catálogo antigo fora da linha tornado privado (lista e como desfazer em
+  `saida/metricas/catalogo-antigo.json`); fica pública só a Medusa (biologia).
 - 01/10/2026: canal parte de 6 inscritos e catálogo antigo fora da linha editorial. Primeira
   semana: medir qual eixo traz mais inscritos por vídeo.

@@ -1,0 +1,23 @@
+{
+  "_leia": "Vídeos e playlists antigos do @curiosidadeiltda tornados PRIVADOS com autorização do Vinícius (01/10/2026), por estarem fora da linha editorial do RADAR365. Nada foi apagado. Para desfazer: YOUTUBE_UPDATE_VIDEO privacy_status=public (e YOUTUBE_UPDATE_PLAYLIST privacyStatus=public) com account youtube_singey-cheap.",
+  "mantido_publico": [
+    {"id": "Rm8mkGcIB6Y", "titulo": "O ÚNICO ANIMAL IMORTAL DO PLANETA! Conheça a Medusa que Engana a Morte #shorts", "views": 151, "motivo": "biologia, dentro da linha; adicionado à playlist Saúde Única e Ciência"}
+  ],
+  "videos_privados": [
+    {"id": "ATBPIs52nvg", "titulo": "O Lado Sombrio de Puff Daddy: Poder e Dominação nas Celebridades", "antes": "public", "views": 6},
+    {"id": "4nnpXn5UCFM", "titulo": "O lado sombrio de Puff Dady leste vs oeste EUA #shorts", "antes": "public", "views": 172},
+    {"id": "lwGSrwNo8qM", "titulo": "Podcast Curso de Oratória", "antes": "public", "views": 1},
+    {"id": "d9557X0S81I", "titulo": "A Nova Disputa pela Rota da Seda: Rússia e China em Jogo! #shrots", "antes": "public", "views": 54},
+    {"id": "BAwyiQq2b4Y", "titulo": "NOTÍCIAS DIÁRIAS. Situação dos refugiados de guerra. Últimas notícias.", "antes": "public", "views": 4},
+    {"id": "gjAMOjJouSY", "titulo": "O REAL MOTIVO DA GUERRA: A ROTA DA SEDA #shorts", "antes": "public", "views": 444},
+    {"id": "tmSiFBk0ltM", "titulo": "NOTÍCIAS DIÁRIAS: Situação deplorável das crianças em Gaza", "antes": "public", "views": 63},
+    {"id": "SdRK1pMvUVc", "titulo": "NOTÍCIAS DIÁRIAS! notícias atualizadas sobre a guerra", "antes": "public", "views": 20},
+    {"id": "5ylgzFvRKwc", "titulo": "VENDER. Como vender mais e melhor - Por Márcio Miranda palestrante.", "antes": "public", "views": 3}
+  ],
+  "ja_privado_antes": [{"id": "OdyzCtpsPN4", "titulo": "Profissão Afiliado aula grátis #shorts"}],
+  "playlists_privadas": [
+    {"id": "PLhq-jDM8zvGsqJLLco9U3JBy97tUTfxel", "titulo": "Guerra na Ucrânia", "antes": "public"},
+    {"id": "PLhq-jDM8zvGs_YgJaKAloZSNrNaLXwkro", "titulo": "Oratória", "antes": "public"},
+    {"id": "PLhq-jDM8zvGv12dw-LiLIRBfwV4IxTkph", "titulo": "NEAR DEATH CAPTURED by GoPro anda camera", "antes": "unlisted"}
+  ]
+}

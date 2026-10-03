@@ -37,6 +37,7 @@ Legenda: ✅ ativo · 🟡 disponível, falta instalar/conectar · ❌ lacuna (s
 |---|---|
 | Ayrshare (publicação em 13 redes) | serviço pago à parte; a regra é não gastar sem aprovação. Reavaliar se o Composio falhar. |
 | AdWhispr, Dataslayer, Kopi, Brandvane | foco em anúncios pagos, e-mail ou SEO de sites, fora da necessidade atual |
+| vidIQ (analytics do YouTube) | pago; recusado pelo Vinícius em 02/10/2026 — não conectar |
 | YouTube Transcriber | o TubeAlfred cobre transcrição e muito mais |
 | Owkin, Synthesize Bio | pesquisa de biologia computacional, não jornalismo |
 
