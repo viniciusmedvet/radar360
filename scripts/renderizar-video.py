@@ -43,6 +43,17 @@ ENTIDADES = [
     (r"\bLula\b", "Luiz Inácio Lula da Silva 2025"), (r"Flávio Bolsonaro", "Flávio Bolsonaro"),
     (r"Ibovespa|\bBolsa\b|\bB3\b", "B3 Brasil Bolsa Balcão"), (r"dólar", "dollar banknotes"),
     (r"Banco Central|Focus|inflação", "Banco Central do Brasil edifício"), (r"urna|eleiç|eleitor", "urna eletrônica"),
+    (r"Mar Negro", "Black Sea coast"), (r"Romênia|Sfântu Gheorghe|Tulcea", "Danube Delta Sfantu Gheorghe"),
+    (r"navio|cargueiro|tripulant", "general cargo ship"), (r"\bmilho\b", "maize field"),
+    (r"Sumy", "Sumy city Ukraine"), (r"fábrica|farmacêutic|medicament|remédio", "pharmaceutical factory"),
+    (r"Ghalibaf", "Mohammad Bagher Ghalibaf"), (r"Araghchi", "Abbas Araghchi"), (r"Pezeshkian", "Masoud Pezeshkian"),
+    (r"bombardeiro|RAF Fairford|B-1", "B-1B Lancer"), (r"Omã", "Gulf of Oman tanker"),
+    (r"Tarcísio", "Tarcísio de Freitas"), (r"Augusto Cury", "Augusto Cury"), (r"Congresso", "Congresso Nacional Brasília"),
+    (r"\bSUS\b|hospital", "hospital Brazil"), (r"ANVISA", "Anvisa sede"),
+    (r"Irkutsk|Shelekhov", "Irkutsk"), (r"Sibéria|Siberian", "Siberia landscape"), (r"Buriácia", "Buryatia"),
+    (r"\bpeste\b|Yersinia", "Yersinia pestis"), (r"roedor|pulga", "marmot Siberia"), (r"Peskov|Kremlin", "Moscow Kremlin"),
+    (r"laboratório|biossegurança|tubo de ensaio", "biosafety laboratory"),
+    (r"clínica|consultório", "veterinary clinic"), (r"juros|DI\b|Selic", "Banco Central do Brasil edifício"),
 ]
 LICENCAS_OK = ("CC BY", "CC0", "Public domain", "PD", "CC-BY")
 
