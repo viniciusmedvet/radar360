@@ -1,8 +1,10 @@
 """Renderiza um roteiro (video-N.md) no padrão telejornal do RADAR365, sem custo de licença:
 
 - Narração: voz neural pt-BR (edge-tts, pt-BR-AntonioNeural), frase a frase, para legenda sincronizada.
-- Fundo: fotos reais de licença livre do Wikimedia Commons (com crédito na tela) casadas com
-  as pessoas/lugares citados em cada frase; sem foto adequada, entra o apresentador-âncora.
+- Fundo: imagens reais, trocadas a cada frase: fotos e vídeos de licença livre do Wikimedia Commons
+  (os mais recentes entre os relevantes), foto principal de páginas de fontes licenciadas ([FOTO: url | crédito])
+  e trechos de vídeo ([TRECHO: ...]: YouTube só com licença Creative Commons conferida no download).
+  Crédito sempre na tela e em video-N-creditos.txt. O apresentador-âncora aparece só na saudação.
 - Tela: selo do jornal, manchete grande (qual notícia), faixa do assunto do bloco, legenda
   do que está sendo falado em frases curtas e rodapé com crédito da imagem.
 
@@ -56,6 +58,13 @@ ENTIDADES = [
     (r"clínica|consultório", "veterinary clinic"), (r"juros|DI\b|Selic", "Banco Central do Brasil edifício"),
 ]
 LICENCAS_OK = ("CC BY", "CC0", "Public domain", "PD", "CC-BY")
+# Páginas de onde [FOTO: url | crédito] pode puxar a imagem principal (licença de uso comercial com crédito,
+# conforme config/fontes-midia.json). Qualquer outro domínio é ignorado.
+DOMINIOS_FOTO = ("agenciabrasil.ebc.com.br", "kremlin.ru", "whitehouse.gov", "defense.gov", "dvidshub.net",
+                 "state.gov", "stf.jus.br", "senado.leg.br", "camara.leg.br", "commons.wikimedia.org")
+# Vídeo direto (arquivo .mp4/.webm) só destes domínios; do YouTube, só com licença CC BY conferida no download.
+DOMINIOS_VIDEO = ("dvidshub.net", "kremlin.ru", "upload.wikimedia.org", "defense.gov", "whitehouse.gov")
+ANCORA_CREDITO = "Apresentador virtual (imagem gerada por IA)"
 
 
 def secao(md, titulo):
@@ -63,8 +72,31 @@ def secao(md, titulo):
     return m.group(1).strip() if m else ""
 
 
+def marcas(par):
+    """Deixas visuais do parágrafo, na ordem: busca, pessoa, foto de página licenciada e trecho de vídeo."""
+    out = []
+    for m in re.finditer(r"\[(B-ROLL|FOTO|TRECHO):([^\]]*)\]", par):
+        tipo, corpo = m.group(1), m.group(2)
+        if tipo == "B-ROLL":
+            k = re.search(r"\|\s*(busca|pessoa):\s*(.+)$", corpo)
+            if k:
+                out.append({"tipo": k.group(1), "q": k.group(2).strip()})
+        elif tipo == "FOTO":
+            partes = [p.strip() for p in corpo.split("|")]
+            if partes and partes[0].startswith("http") and len(partes) > 1:
+                out.append({"tipo": "foto", "url": partes[0], "credito": partes[1]})
+        else:  # TRECHO: fonte · título · data · URL · licença [| início: SS]
+            url = re.search(r"https?://\S+?(?=\s*[·|]|\s*$)", corpo)
+            ini = re.search(r"in[ií]cio:\s*(\d+)", corpo)
+            if url:
+                campos = [c.strip() for c in corpo.split("|")[0].split("·")]
+                out.append({"tipo": "trecho", "url": url.group(0), "inicio": int(ini.group(1)) if ini else 0,
+                            "credito": "Trecho: " + " · ".join(c for c in campos if not c.startswith("http"))})
+    return out
+
+
 def blocos(md):
-    """[(bloco, texto)] do roteiro narrado, sem deixas visuais nem marcação."""
+    """[(bloco, texto, deixas)] do roteiro narrado, sem deixas visuais nem marcação na fala."""
     bloco, saida = "ABERTURA", []
     for par in re.split(r"\n\s*\n", secao(md, "Roteiro narrado")):
         par = par.strip()
@@ -72,11 +104,24 @@ def blocos(md):
         if cab:
             bloco = re.sub(r"\s*\(.*?\)\s*$", "", cab.group(1))
             par = par[cab.end():].strip()
+        deixas = marcas(par)
         fala = re.sub(r"\[[^\]]*\]", "", par)
         fala = re.sub(r"\*\*(.+?)\*\*", r"\1", fala).replace("(pausa)", "").strip()
         if len(fala) > 3:
-            saida.append((bloco, fala))
-    return saida
+            saida.append((bloco, fala, deixas))
+        elif deixas and saida:  # deixa solta antes do próximo parágrafo: vale para ele
+            saida.append((bloco, "", deixas))
+    # junta deixas soltas ao parágrafo seguinte
+    # parágrafo sem deixa herda as do anterior, para a imagem continuar mudando a cada frase
+    final, pend, herdada = [], [], []
+    for b, fala, d in saida:
+        if not fala:
+            pend += d
+            continue
+        d = pend + d or herdada
+        herdada, pend = d, []
+        final.append((b, fala, d))
+    return final
 
 
 def frases(texto):
@@ -99,56 +144,138 @@ def assunto(bloco):
     return {"GANCHO": "DESTAQUE", "PROMESSA": "NESTA EDIÇÃO"}.get(b, b)
 
 
-# ---------- imagens ----------
-class Fotos:
+# ---------- imagens e trechos ----------
+class Midia:
+    """Busca e baixa fotos e vídeos de licença livre. Cada item: {"tipo": "foto"|"video", "arq", "credito"}."""
+
     def __init__(self, pasta):
-        self.pasta, self.cache, self.usadas = pasta, {}, {}
+        self.pasta, self.cache, self.giro = pasta, {}, {}
         self.s = requests.Session()
         self.s.headers.update(UA)
 
-    def buscar(self, consulta):
-        if consulta in self.cache:
-            return self.cache[consulta]
+    def _commons(self, consulta, filtro, limite):
         achadas = []
         try:
             r = self.s.get("https://commons.wikimedia.org/w/api.php", timeout=20, params=dict(
-                action="query", generator="search", gsrsearch=f"{consulta} filetype:bitmap", gsrnamespace=6,
-                gsrlimit=8, prop="imageinfo", iiprop="url|extmetadata|size", iiurlwidth=1920, format="json")).json()
+                action="query", generator="search", gsrsearch=f"{consulta} {filtro}", gsrnamespace=6,
+                gsrlimit=limite, prop="imageinfo", iiprop="url|extmetadata|size|mediatype|timestamp",
+                iiurlwidth=1920, format="json")).json()
             for p in sorted((r.get("query", {}).get("pages", {}) or {}).values(), key=lambda p: p.get("index", 99)):
                 ii = p["imageinfo"][0]
                 meta = ii.get("extmetadata", {})
                 lic = meta.get("LicenseShortName", {}).get("value", "")
                 # canal monetizado: só licenças que permitem uso comercial e edição (nada de NC/ND)
-                if (not lic.startswith(LICENCAS_OK) or re.search(r"\bNC\b|\bND\b", lic)
-                        or ii.get("width", 0) < 900 or ii["width"] < ii["height"] * 0.9):
+                if not lic.startswith(LICENCAS_OK) or re.search(r"\bNC\b|\bND\b", lic):
                     continue
                 autor = html.unescape(re.sub(r"<[^>]+>", "", meta.get("Artist", {}).get("value", ""))).strip()
-                achadas.append({"url": ii["thumburl"], "credito": f"Foto: {autor[:60] or 'Wikimedia Commons'} · {lic} · Wikimedia Commons"})
-        except Exception as erro:  # sem foto, o âncora assume
+                credito = f"{autor[:60] or 'Wikimedia Commons'} · {lic} · Wikimedia Commons"
+                data = (meta.get("DateTimeOriginal", {}).get("value") or ii.get("timestamp", ""))[:40]
+                if filtro == "filetype:video":
+                    if ii.get("size", 0) > 80_000_000 or ii.get("width", 0) < 640:
+                        continue
+                    achadas.append({"tipo": "video", "url": ii["url"], "credito": "Vídeo: " + credito, "data": data})
+                else:
+                    if ii.get("width", 0) < 900 or ii["width"] < ii["height"] * 0.9:
+                        continue
+                    achadas.append({"tipo": "foto", "url": ii["thumburl"], "credito": "Foto: " + credito, "data": data})
+        except Exception as erro:
             print("commons:", consulta, erro)
-        self.cache[consulta] = achadas
-        return achadas
+        # entre as relevantes, as mais recentes primeiro
+        return sorted(achadas, key=lambda a: re.sub(r"\D", "", a["data"])[:8] or "0", reverse=True)
 
-    def para(self, texto):
+    def busca(self, consulta, com_video=True):
+        chave = (consulta, com_video)
+        if chave not in self.cache:
+            fotos = self._commons(consulta, "filetype:bitmap", 10)
+            videos = self._commons(consulta, "filetype:video", 4) if com_video else []
+            mistura = []
+            for i in range(max(len(fotos), len(videos))):
+                mistura += videos[i:i + 1] + fotos[i:i + 1]
+            self.cache[chave] = mistura
+        return self.cache[chave]
+
+    def pagina(self, item):
+        """[FOTO: url | crédito]: imagem principal (og:image) de uma página de fonte licenciada."""
+        if not any(d in item["url"] for d in DOMINIOS_FOTO):
+            print("foto fora da lista de fontes permitidas:", item["url"])
+            return []
+        try:
+            t = self.s.get(item["url"], timeout=25).text
+            m = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', t) or \
+                re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image', t)
+            if m:
+                return [{"tipo": "foto", "url": html.unescape(m.group(1)), "credito": "Foto: " + item["credito"]}]
+        except Exception as erro:
+            print("pagina:", item["url"], erro)
+        return []
+
+    def trecho(self, item):
+        """[TRECHO: ...]: YouTube só com licença Creative Commons conferida; arquivo direto só de domínio permitido."""
+        url = item["url"]
+        destino = self.pasta / (hashlib.sha1(url.encode()).hexdigest()[:16] + ".mp4")
+        if destino.exists():
+            return [{"tipo": "video", "arq": destino, "credito": item["credito"], "inicio": item["inicio"]}]
+        try:
+            if "youtube.com" in url or "youtu.be" in url:
+                info = json.loads(subprocess.run(["yt-dlp", "-J", "--no-warnings", url], capture_output=True,
+                                                 text=True, timeout=90).stdout or "{}")
+                if "creative commons" not in (info.get("license") or "").lower():
+                    print("trecho recusado (sem licença CC no YouTube):", url, info.get("license"))
+                    return []
+                ini = item["inicio"]
+                subprocess.run(["yt-dlp", "-q", "-f", "bv*[height<=720][ext=mp4]+ba/b[height<=720]/b",
+                                "--merge-output-format", "mp4", "--download-sections", f"*{ini}-{ini + 40}",
+                                "-o", str(destino), url], timeout=240, check=True)
+                return [{"tipo": "video", "arq": destino, "credito": item["credito"], "inicio": 0}]
+            if any(d in url for d in DOMINIOS_VIDEO):
+                destino.write_bytes(self.s.get(url, timeout=120).content)
+                return [{"tipo": "video", "arq": destino, "credito": item["credito"], "inicio": item["inicio"]}]
+            print("trecho fora da lista de fontes permitidas:", url)
+        except Exception as erro:
+            print("trecho:", url, erro)
+        return []
+
+    def resolver(self, deixa):
+        if deixa["tipo"] == "foto":
+            return self.pagina(deixa)
+        if deixa["tipo"] == "trecho":
+            return self.trecho(deixa)
+        return self.busca(deixa["q"], com_video=deixa["tipo"] == "busca")
+
+    def entidade(self, texto):
         for padrao, consulta in ENTIDADES:
             if re.search(padrao, texto, re.I):
-                opcoes = self.buscar(consulta)
-                if opcoes:
-                    i = self.usadas.get(consulta, 0) % len(opcoes)
-                    self.usadas[consulta] = self.usadas.get(consulta, 0) + 1
-                    try:
-                        return self.baixar(opcoes[i])
-                    except Exception as erro:  # falha de rede: segue com o âncora
-                        print("foto:", consulta, erro)
-                        return None
+                return consulta
         return None
 
-    def baixar(self, foto):
-        destino = self.pasta / (hashlib.sha1(foto["url"].encode()).hexdigest()[:16] + ".jpg")
-        if not destino.exists():
-            img = Image.open(io.BytesIO(self.s.get(foto["url"], timeout=30).content)).convert("RGB")
-            preencher(img).save(destino, quality=90)
-        return destino, foto["credito"]
+    def proximo(self, chave, opcoes):
+        """Gira entre as opções de uma mesma chave e baixa; pula as que falharem."""
+        for _ in range(len(opcoes)):
+            i = self.giro.get(chave, 0) % len(opcoes)
+            self.giro[chave] = self.giro.get(chave, 0) + 1
+            pronto = self.baixar(opcoes[i])
+            if pronto:
+                return pronto
+        return None
+
+    def baixar(self, item):
+        if item.get("arq"):
+            return item
+        try:
+            ext = ".jpg" if item["tipo"] == "foto" else Path(item["url"].split("?")[0]).suffix or ".webm"
+            destino = self.pasta / (hashlib.sha1(item["url"].encode()).hexdigest()[:16] + ext)
+            if not destino.exists():
+                conteudo = self.s.get(item["url"], timeout=90).content
+                if item["tipo"] == "foto":
+                    preencher(Image.open(io.BytesIO(conteudo)).convert("RGB")).save(destino, quality=90)
+                else:
+                    destino.write_bytes(conteudo)
+                    if duracao(destino) < 2:
+                        return None
+            return {**item, "arq": destino, "inicio": item.get("inicio", 0)}
+        except Exception as erro:
+            print("baixar:", item.get("url"), erro)
+            return None
 
 
 def preencher(img):
@@ -175,28 +302,18 @@ def quebrar(d, texto, fonte, largura):
     return linhas + ([atual] if atual else [])
 
 
-def legenda_curta(frase, limite=95):
-    return [p.strip() for p in textwrap.wrap(frase, limite)]
-
-
-def quadro(fundo, credito, manchete, assunto_txt, legenda, destino, eh_ancora):
-    img = Image.open(fundo).convert("RGB")
-    if not eh_ancora:
-        img = Image.eval(img, lambda v: int(v * 0.82))
-    base = img.convert("RGBA")
+def camada(credito, manchete, assunto_txt, legenda):
+    """Grafismo do telejornal em camada transparente (vai por cima de foto ou de vídeo)."""
     cam = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(cam)
-    # degradê inferior para leitura
-    for i in range(420):
+    for i in range(420):  # degradê inferior para leitura
         d.line([(0, H - 420 + i), (W, H - 420 + i)], fill=(0, 8, 24, int(230 * i / 420)))
-    # selo do jornal (canto superior esquerdo)
     fs = f(FB, 50)
     ls = d.textlength(MARCA, font=fs) + 48
     d.rectangle([60, 50, 60 + ls, 128], fill=VERMELHO)
     d.text((84, 62), MARCA, font=fs, fill=BRANCO)
     d.rectangle([60, 128, 60 + ls, 158], fill=AZUL)
     d.text((84, 131), SLOGAN, font=f(FB, 20), fill=CINZA)
-    # legenda (o que está sendo falado): até 2 linhas, fonte reduz se precisar
     for tam in (46, 40, 34):
         fl = f(FB, tam)
         linhas_l = quebrar(d, legenda, fl, W - 280)
@@ -205,7 +322,6 @@ def quadro(fundo, credito, manchete, assunto_txt, legenda, destino, eh_ancora):
     linhas_l = linhas_l[:3]
     alt_l = int(tam * 1.3)
     yl = H - 50 - alt_l * len(linhas_l)
-    # manchete (qual notícia) e faixa do assunto, empilhadas acima da legenda
     fm = f(FB, 60)
     linhas_m = quebrar(d, manchete.upper(), fm, W - 200)[:2]
     fa = f(FB, 38)
@@ -224,8 +340,12 @@ def quadro(fundo, credito, manchete, assunto_txt, legenda, destino, eh_ancora):
         d.rectangle([x - 18, y - 4, x + largura + 18, y + alt_l - 2], fill=(0, 0, 0, 185))
         d.text((x, y), l, font=fl, fill=(255, 236, 120))
     if credito:
-        d.text((W - 60 - d.textlength(credito, font=f(FR, 20)), 60), credito, font=f(FR, 20), fill=CINZA)
-    Image.alpha_composite(base, cam).convert("RGB").save(destino, quality=92)
+        fc = f(FR, 22)
+        credito = credito[:150]
+        lc = d.textlength(credito, font=fc)
+        d.rectangle([W - 72 - lc, 52, W - 48, 86], fill=(0, 0, 0, 160))
+        d.text((W - 60 - lc, 56), credito, font=fc, fill=BRANCO)
+    return cam
 
 
 def miniatura(fundo, texto, destino):
@@ -256,8 +376,11 @@ async def falar(texto, destino):
 
 
 def duracao(arq):
-    return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
-                                 str(arq)], capture_output=True, text=True).stdout or 0)
+    try:
+        return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
+                                     str(arq)], capture_output=True, text=True).stdout or 0)
+    except ValueError:
+        return 0.0
 
 
 def abertura(manchete):
@@ -268,52 +391,107 @@ def abertura(manchete):
             f"E a notícia de agora é esta: {manchete}.")
 
 
+ENC = ["-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-r", "25",
+       "-c:a", "aac", "-b:a", "160k", "-ar", "44100", "-ac", "2", "-af", "apad"]
+
+
+def segmento(item, png, mp3, seg, mp4, avanco=0.0):
+    if item and item["tipo"] == "video":
+        ini = item.get("inicio", 0) + avanco
+        total = duracao(item["arq"])
+        if total and ini + 1 > total:
+            ini = 0
+        filtro = ("[0:v]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,fps=25,"
+                  "eq=brightness=-0.07,format=rgba[b];[b][1:v]overlay=0:0,format=yuv420p[v]")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-stream_loop", "-1", "-ss", f"{ini:.2f}",
+                        "-i", str(item["arq"]), "-i", str(png), "-i", str(mp3), "-filter_complex", filtro,
+                        "-map", "[v]", "-map", "2:a", "-t", f"{seg:.2f}", *ENC, "-t", f"{seg:.2f}", str(mp4)],
+                       check=True)
+    else:
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-framerate", "25", "-t", f"{seg:.2f}",
+                        "-i", str(png), "-i", str(mp3), "-tune", "stillimage", *ENC, "-t", f"{seg:.2f}", str(mp4)],
+                       check=True)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("roteiro")
     ap.add_argument("saida")
     ap.add_argument("--ancora", required=True)
-    ap.add_argument("--inicio", type=int, default=0, help="retomar a partir da frase N")
     a = ap.parse_args()
     md = Path(a.roteiro).read_text(encoding="utf-8")
     nome = Path(a.roteiro).stem
     out = Path(a.saida)
-    tmp = out / f"{nome}_v2"
-    (tmp / "fotos").mkdir(parents=True, exist_ok=True)
+    tmp = out / f"{nome}_v3"
+    (tmp / "midia").mkdir(parents=True, exist_ok=True)
     manchete = re.sub(r"^\s*1\.\s*", "", secao(md, "Títulos").splitlines()[0]).strip()
-    ancora = tmp / "fotos" / "ancora.jpg"
+    ancora = tmp / "midia" / "ancora.jpg"
     preencher(Image.open(a.ancora).convert("RGB")).save(ancora, quality=92)
-    fotos = Fotos(tmp / "fotos")
+    ancora_item = {"tipo": "foto", "arq": ancora, "credito": ANCORA_CREDITO}
+    midia = Midia(tmp / "midia")
 
-    itens = [("ABERTURA", s) for s in frases(abertura(manchete))]
-    for bloco, fala in blocos(md):
-        itens += [(bloco, s) for s in frases(fala)]
+    pars = blocos(md)
+    # (bloco, frase, deixas do parágrafo, id do parágrafo); a abertura usa as imagens do primeiro parágrafo
+    itens = [("ABERTURA", s, pars[0][2] if pars else [], 0) for s in frases(abertura(manchete))]
+    for k, (bloco, fala, deixas) in enumerate(pars):
+        itens += [(bloco, s, deixas, k) for s in frases(fala)]
 
-    creditos = set()
-    for i, (bloco, frase) in enumerate(itens):
-        if i < a.inicio or (tmp / f"{i:03}.mp4").exists():
-            continue
+    creditos, usados, n_ancora, avanco = [], [], 0, {}
+    for i, (bloco, frase, deixas, k) in enumerate(itens):
         mp3, png, mp4 = tmp / f"{i:03}.mp3", tmp / f"{i:03}.png", tmp / f"{i:03}.mp4"
         asyncio.run(falar(frase, mp3))
-        achou = None if bloco == "ABERTURA" else fotos.para(frase)
-        fundo, credito = achou if achou else (ancora, "Apresentador virtual (imagem gerada por IA)")
-        quadro(fundo, credito, manchete, assunto(bloco), frase, png, achou is None)
-        # imagem fixa por frase (a troca de quadro a cada frase dá o ritmo); render rápido para o servidor grátis
         seg = duracao(mp3) + 0.25
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-loop", "1", "-framerate", "25", "-t", f"{seg:.2f}",
-                        "-i", str(png), "-i", str(mp3),
-                        "-c:v", "libx264", "-preset", "ultrafast", "-tune", "stillimage", "-pix_fmt", "yuv420p",
-                        "-c:a", "aac", "-b:a", "160k", "-ar", "44100", "-af", "apad", "-t", f"{seg:.2f}", str(mp4)],
-                       check=True)
+        item = None
+        if i == 0:  # o âncora só aparece na saudação
+            item = ancora_item
+        if not item:  # pessoa/lugar citado nesta frase
+            q = midia.entidade(frase)
+            if q:
+                item = midia.proximo(("ent", q), midia.busca(q, com_video=False) or [])
+        if not item and deixas:  # deixas visuais do parágrafo (busca, foto de fonte, trecho)
+            opcoes = [o for d in deixas for o in midia.resolver(d)]
+            if opcoes:
+                item = midia.proximo(("par", json.dumps(deixas, sort_keys=True)), opcoes)
+        if not item and usados:  # repete a última imagem real do vídeo antes de cair no âncora
+            item = usados[-1]
+        if not item:
+            item, n_ancora = ancora_item, n_ancora + 1
+        if item is not ancora_item:
+            usados.append(item)
+            if item["credito"] not in creditos:
+                creditos.append(item["credito"])
+        if item["tipo"] == "foto":
+            fundo = Image.open(item["arq"]).convert("RGB")
+            if item is not ancora_item:
+                fundo = Image.eval(fundo, lambda v: int(v * 0.82))
+            Image.alpha_composite(fundo.convert("RGBA"), camada(item["credito"], manchete, assunto(bloco), frase)) \
+                .convert("RGB").save(png.with_suffix(".jpg"), quality=92)
+            segmento(item, png.with_suffix(".jpg"), mp3, seg, mp4)
+        else:
+            camada(item["credito"], manchete, assunto(bloco), frase).save(png)
+            try:
+                # o mesmo vídeo continua de onde parou quando volta a aparecer
+                segmento(item, png, mp3, seg, mp4, avanco.get(item["arq"], 0.0))
+            except subprocess.CalledProcessError as erro:  # vídeo ilegível: usa o âncora nesta frase
+                print("segmento de vídeo falhou:", item["arq"], erro)
+                Image.alpha_composite(Image.open(ancora).convert("RGBA"),
+                                      camada(ANCORA_CREDITO, manchete, assunto(bloco), frase)).convert("RGB") \
+                    .save(png.with_suffix(".jpg"), quality=92)
+                segmento(ancora_item, png.with_suffix(".jpg"), mp3, seg, mp4)
+            avanco[item["arq"]] = avanco.get(item["arq"], 0.0) + seg
+
     partes = sorted(tmp.glob("[0-9][0-9][0-9].mp4"))
     (tmp / "lista.txt").write_text("".join(f"file '{p.name}'\n" for p in partes))
     final = out / f"{nome}.mp4"
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", str(tmp / "lista.txt"),
                     "-c", "copy", "-movflags", "+faststart", str(final)], check=True)
-    fundo_mini = next((p for p in (tmp / "fotos").glob("*.jpg") if p.name != "ancora.jpg"), ancora)
-    miniatura(fundo_mini, secao(md, "Texto da miniatura") or manchete, out / f"{nome}.jpg")
-    print(json.dumps({"video": str(final), "frases": len(itens), "partes": len(partes),
-                      "segundos": round(duracao(final))}))
+    fotos_reais = [u["arq"] for u in usados if u["tipo"] == "foto"]
+    miniatura(fotos_reais[0] if fotos_reais else ancora, secao(md, "Texto da miniatura") or manchete, out / f"{nome}.jpg")
+    (out / f"{nome}-creditos.txt").write_text("Créditos de imagens e trechos:\n" + "\n".join(f"- {c}" for c in creditos),
+                                             encoding="utf-8")
+    n_video = sum(1 for u in usados if u["tipo"] == "video")
+    print(json.dumps({"video": str(final), "frases": len(itens), "segundos": round(duracao(final)),
+                      "ancora": n_ancora + 1, "fotos": len(usados) - n_video, "trechos_video": n_video}))
 
 
 if __name__ == "__main__":
