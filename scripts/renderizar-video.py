@@ -167,7 +167,7 @@ class Midia:
                 # canal monetizado: só licenças que permitem uso comercial e edição (nada de NC/ND)
                 if not lic.startswith(LICENCAS_OK) or re.search(r"\bNC\b|\bND\b", lic):
                     continue
-                autor = html.unescape(re.sub(r"<[^>]+>", "", meta.get("Artist", {}).get("value", ""))).strip()
+                autor = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", meta.get("Artist", {}).get("value", "")))).strip()
                 credito = f"{autor[:60] or 'Wikimedia Commons'} · {lic} · Wikimedia Commons"
                 data = (meta.get("DateTimeOriginal", {}).get("value") or ii.get("timestamp", ""))[:40]
                 if filtro == "filetype:video":
@@ -341,7 +341,7 @@ def camada(credito, manchete, assunto_txt, legenda):
         d.text((x, y), l, font=fl, fill=(255, 236, 120))
     if credito:
         fc = f(FR, 22)
-        credito = credito[:150]
+        credito = re.sub(r"\s+", " ", credito).strip()[:150]  # crédito do Commons pode vir com quebra de linha
         lc = d.textlength(credito, font=fc)
         d.rectangle([W - 72 - lc, 52, W - 48, 86], fill=(0, 0, 0, 160))
         d.text((W - 60 - lc, 56), credito, font=fc, fill=BRANCO)

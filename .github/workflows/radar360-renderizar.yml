@@ -30,7 +30,7 @@ jobs:
       - name: Dependências
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg fonts-dejavu-core
-          pip install -q edge-tts requests pillow
+          pip install -q edge-tts requests pillow yt-dlp
       - name: Descobrir a pasta do dia
         id: dia
         run: |
@@ -57,6 +57,6 @@ jobs:
         run: |
           TAG="radar360-${{ steps.dia.outputs.data }}"
           gh release delete "$TAG" -y --cleanup-tag 2>/dev/null || true
-          gh release create "$TAG" render/video-*.mp4 render/video-*.jpg \
+          gh release create "$TAG" render/video-*.mp4 render/video-*.jpg render/video-*-creditos.txt \
             --target "${{ github.sha }}" --title "RADAR365 — ${{ steps.dia.outputs.data }}" \
             --notes "Vídeos renderizados automaticamente. Publicação no YouTube pela rotina do Claude."
