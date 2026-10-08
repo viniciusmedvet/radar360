@@ -45,6 +45,20 @@ Escolha sempre as notícias de maior impacto das últimas 24 horas.
 - O vídeo precisa ter contribuição original (análise, contexto, narração): trechos ilustram,
   não substituem o conteúdo — exigência da política de conteúdo reutilizado do YouTube.
 
+## 2.2 Imagens reais em todo o vídeo (renderizador v3, ordem do Vinícius em 06/10/2026)
+
+- O apresentador-âncora aparece só na saudação inicial. Todo o resto do vídeo usa imagens reais,
+  trocadas a cada frase, sempre com crédito na tela e na descrição (arquivo video-N-creditos.txt).
+- Coloque ao menos uma deixa visual por parágrafo; parágrafo sem deixa herda a do anterior:
+  - `[B-ROLL: descrição | busca: termo em inglês]` → fotos e vídeos do Wikimedia Commons (CC0, CC BY, CC BY-SA, domínio público), os mais recentes entre os relevantes.
+  - `[B-ROLL: descrição | pessoa: Nome Completo]` → foto da pessoa no Wikimedia Commons.
+  - `[FOTO: URL da página | Fotógrafo/Fonte]` → foto principal da matéria, só de fontes permitidas
+    (Agência Brasil, STF, Senado, Câmara, Kremlin, Casa Branca, Departamento de Defesa/DVIDS, Departamento de Estado).
+  - `[TRECHO: canal · título · data · URL · licença | início: segundos]` → trecho de vídeo. YouTube só entra se o próprio
+    YouTube informar licença Creative Commons (o renderizador confere e recusa os demais); arquivos diretos só de domínios permitidos.
+- Trechos de emissoras ou de canais sem licença CC BY continuam proibidos, mesmo com crédito: o Content ID do YouTube
+  reivindica ou derruba o vídeo e pode gerar strike no canal.
+
 ## 3. Narrativa de alto impacto (a emoção vem dos fatos)
 
 - Abra com um gancho de até 30 segundos: a cena mais forte, a pergunta que o espectador não
