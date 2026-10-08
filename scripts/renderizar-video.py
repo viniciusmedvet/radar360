@@ -456,6 +456,12 @@ def main():
             opcoes = [o for d in deixas for o in midia.resolver(d)]
             if opcoes:
                 item = midia.proximo(("par", json.dumps(deixas, sort_keys=True)), opcoes)
+        if not item and not usados:  # começo sem imagem: adianta a primeira imagem real dos parágrafos seguintes
+            for _, _, d_seg in pars[k + 1:k + 6]:
+                opcoes = [o for d in d_seg for o in midia.resolver(d)]
+                item = midia.proximo(("par", json.dumps(d_seg, sort_keys=True)), opcoes) if opcoes else None
+                if item:
+                    break
         if not item and usados:  # repete a última imagem real do vídeo antes de cair no âncora
             item = usados[-1]
         if not item:
