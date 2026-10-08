@@ -55,6 +55,10 @@ ENTIDADES = [
     (r"Irkutsk|Shelekhov", "Irkutsk"), (r"Sibéria|Siberian", "Siberia landscape"), (r"Buriácia", "Buryatia"),
     (r"\bpeste\b|Yersinia", "Yersinia pestis"), (r"roedor|pulga", "marmot Siberia"), (r"Peskov|Kremlin", "Moscow Kremlin"),
     (r"laboratório|biossegurança|tubo de ensaio", "biosafety laboratory"),
+    (r"Rubio", "Marco Rubio"), (r"Klitschko", "Vitali Klitschko"), (r"Pryluky|Chernihiv", "Pryluky"),
+    (r"Flávio Dino|\bDino\b", "Flávio Dino"), (r"Cármen Lúcia", "Cármen Lúcia"), (r"Fachin", "Edson Fachin"),
+    (r"Zanin", "Cristiano Zanin"), (r"Nunes Marques", "Nunes Marques"), (r"Federal Reserve|\bFed\b", "Marriner S. Eccles Federal Reserve Board Building"),
+    (r"malária|Plasmodium", "Plasmodium vivax"), (r"Catar|Madinat", "Qatar coast"),
     (r"clínica|consultório", "veterinary clinic"), (r"juros|DI\b|Selic", "Banco Central do Brasil edifício"),
 ]
 LICENCAS_OK = ("CC BY", "CC0", "Public domain", "PD", "CC-BY")
